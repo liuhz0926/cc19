@@ -124,9 +124,9 @@ I'm a talkative person, so this isn't particularly surprising. What's most inter
 Of course, your reaction may be a more primal "FORTY TWO THOUSAND MESSAGES?!?!". If that's the case, wait until you see my all-time totals across all Tinder statistics.
 
 ```{r}
-messages = bentinder %>% select(date,messages_sent,messages_received) %>% mutate(message_differential = messages_received - messages_sent)
+messages = bentinder %>% dplyr::select(date,messages_sent,messages_received) %>% mutate(message_differential = messages_received - messages_sent)
 
-bentinder = bentinder %>% mutate(messages = messages_sent + messages_received) %>% select(-c(messages_sent,messages_received))
+bentinder = bentinder %>% mutate(messages = messages_sent + messages_received) %>% dplyr::select(-c(messages_sent,messages_received))
 
 bentinder = bentinder %>% mutate(swipes=likes+passes)
 sapply(bentinder[-1],sum)
@@ -248,7 +248,7 @@ We will start our graphing by examining my match rate and swipe right rate over 
 
 bentinder = bentinder %>% mutate(swipe_right_rate = (likes / (likes+passes))) %>% mutate(match_rate = log( ifelse(matches==0,1,matches) / ifelse(likes==0,1,likes)))
            
-rates = bentinder %>% select(date,swipe_right_rate,match_rate) 
+rates = bentinder %>% dplyr::select(date,swipe_right_rate,match_rate) 
 
 match_rate_plot = ggplot(rates) +
   geom_point(size=0.2,alpha=0.5,aes(date,match_rate)) +
@@ -302,7 +302,7 @@ bentinder[1:20,-c(8,9)]
 print('----------skipping rows 21 to 169----------')
 bentinder[170:190,-c(8,9)]
  
-bentinder = bentinder %>% select(-c(likes,passes,swipe_right_rate,match_rate))
+bentinder = bentinder %>% dplyr::select(-c(likes,passes,swipe_right_rate,match_rate))
 bentinder = bentinder[-c(1:186),]
 messages = messages[-c(1:186),]
 ```
@@ -367,7 +367,7 @@ Let's view messages sent and messages received separately and study the trend a 
 
 ```{r warning=FALSE}
 
-tidy_messages = messages %>% select(-message_differential) %>% gather(key = 'key',value = 'value',-date)
+tidy_messages = messages %>% dplyr::select(-message_differential) %>% gather(key = 'key',value = 'value',-date)
 
 ggplot(tidy_messages) +
   geom_smooth(aes(date,value,color=key),size=2,se=FALSE) +
@@ -518,7 +518,7 @@ As my Saturday numbers suggest, this often doesn't happen the same night. So per
 Here's a parallel coordinate plot that allows you to play with the outliers in my usage categories, and see how my luck varied on my high-usage days. Perhaps you'll notice a trend that I missed.
 
 ```{r}
-nodates = select(bentinder,-date)
+nodates = dplyr::select(bentinder,-date)
 
 
 parcoords(nodates,
