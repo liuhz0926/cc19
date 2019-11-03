@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 13 Introduction to Stringr Stringr包入门详解 | Community contributions for EDAV Fall 2019</title>
+  <meta name="description" content="This book will hold all community contributions for STAT GR 5702 Fall 2019 at Columbia University" />
+  <meta name="generator" content="bookdown 0.14 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 13 Introduction to Stringr Stringr包入门详解 | Community contributions for EDAV Fall 2019" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This book will hold all community contributions for STAT GR 5702 Fall 2019 at Columbia University" />
+  <meta name="github-repo" content="jtr13/cc19" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 13 Introduction to Stringr Stringr包入门详解 | Community contributions for EDAV Fall 2019" />
+  
+  <meta name="twitter:description" content="This book will hold all community contributions for STAT GR 5702 Fall 2019 at Columbia University" />
+  
+
+
+
+<meta name="date" content="2019-11-03" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="wordcloud.html"/>
+<link rel="next" href="latex-visualization.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<link href="libs/parallel-coordinates-2.1.8/parcoords.css" rel="stylesheet" />
+<script src="libs/parcoords-binding-1.0.0/parcoords.js"></script>
+<link href="libs/wordcloud2-0.0.1/wordcloud.css" rel="stylesheet" />
+<script src="libs/wordcloud2-0.0.1/wordcloud2-all.js"></script>
+<script src="libs/wordcloud2-0.0.1/hover.js"></script>
+<script src="libs/wordcloud2-binding-0.2.2/wordcloud2.js"></script>
+<link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
+<script src="libs/str_view-binding-1.4.0/str_view.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="index.html"><b>CC for EDAV 2019</b></a></li>
+
+<li class="divider"></li>
+<li class="part"><span><b>I Introduction</b></span></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Instructions</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#background"><i class="fa fa-check"></i><b>1.1</b> Background</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#preparing-your-.rmd-file"><i class="fa fa-check"></i><b>1.2</b> Preparing your <code>.Rmd</code> file</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#submission-steps"><i class="fa fa-check"></i><b>1.3</b> Submission Steps</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#optional-tweaks"><i class="fa fa-check"></i><b>1.4</b> Optional tweaks</a></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#faq"><i class="fa fa-check"></i><b>1.5</b> FAQ</a><ul>
+<li class="chapter" data-level="1.5.1" data-path="index.html"><a href="index.html#what-should-i-expect-after-creating-a-pull-request"><i class="fa fa-check"></i><b>1.5.1</b> What should I expect after creating a pull request?</a></li>
+<li class="chapter" data-level="1.5.2" data-path="index.html"><a href="index.html#what-if-i-catch-mistakes-after-my-pull-request-is-merged"><i class="fa fa-check"></i><b>1.5.2</b> What if I catch mistakes after my pull request is merged?</a></li>
+<li class="chapter" data-level="1.5.3" data-path="index.html"><a href="index.html#other-questions"><i class="fa fa-check"></i><b>1.5.3</b> Other questions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="sample-project.html"><a href="sample-project.html"><i class="fa fa-check"></i><b>2</b> Sample project</a></li>
+<li class="part"><span><b>II Spatial Analysis</b></span></li>
+<li class="chapter" data-level="3" data-path="stamen-maps-with-ggmap.html"><a href="stamen-maps-with-ggmap.html"><i class="fa fa-check"></i><b>3</b> Stamen maps with ggmap</a><ul>
+<li class="chapter" data-level="3.1" data-path="stamen-maps-with-ggmap.html"><a href="stamen-maps-with-ggmap.html#mutilayerd-plots-with-ggmaps"><i class="fa fa-check"></i><b>3.1</b> Mutilayerd plots with ggmaps</a></li>
+<li class="chapter" data-level="3.2" data-path="stamen-maps-with-ggmap.html"><a href="stamen-maps-with-ggmap.html#getting-deeper"><i class="fa fa-check"></i><b>3.2</b> Getting Deeper</a></li>
+</ul></li>
+<li class="part"><span><b>III Static Graphs</b></span></li>
+<li class="chapter" data-level="4" data-path="ridgeline-plots.html"><a href="ridgeline-plots.html"><i class="fa fa-check"></i><b>4</b> Ridgeline plots</a><ul>
+<li class="chapter" data-level="4.1" data-path="ridgeline-plots.html"><a href="ridgeline-plots.html#overview"><i class="fa fa-check"></i><b>4.1</b> Overview</a></li>
+<li class="chapter" data-level="4.2" data-path="ridgeline-plots.html"><a href="ridgeline-plots.html#tldr"><i class="fa fa-check"></i><b>4.2</b> tl;dr</a></li>
+<li class="chapter" data-level="4.3" data-path="ridgeline-plots.html"><a href="ridgeline-plots.html#simple-examples"><i class="fa fa-check"></i><b>4.3</b> Simple examples</a></li>
+<li class="chapter" data-level="4.4" data-path="ridgeline-plots.html"><a href="ridgeline-plots.html#theory"><i class="fa fa-check"></i><b>4.4</b> Theory</a></li>
+<li class="chapter" data-level="4.5" data-path="ridgeline-plots.html"><a href="ridgeline-plots.html#external-resources"><i class="fa fa-check"></i><b>4.5</b> External resources</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="gantt-charts.html"><a href="gantt-charts.html"><i class="fa fa-check"></i><b>5</b> Gantt charts</a><ul>
+<li class="chapter" data-level="5.1" data-path="gantt-charts.html"><a href="gantt-charts.html#using-geom_line"><i class="fa fa-check"></i><b>5.1</b> Using geom_line</a></li>
+<li class="chapter" data-level="5.2" data-path="gantt-charts.html"><a href="gantt-charts.html#using-the-package-plan"><i class="fa fa-check"></i><b>5.2</b> Using the package ‘plan’</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="likert.html"><a href="likert.html"><i class="fa fa-check"></i><b>6</b> Likert</a><ul>
+<li class="chapter" data-level="6.1" data-path="likert.html"><a href="likert.html#overview-1"><i class="fa fa-check"></i><b>6.1</b> Overview</a></li>
+<li class="chapter" data-level="6.2" data-path="likert.html"><a href="likert.html#tldr-1"><i class="fa fa-check"></i><b>6.2</b> tl;dr</a></li>
+<li class="chapter" data-level="6.3" data-path="likert.html"><a href="likert.html#simple-examples-1"><i class="fa fa-check"></i><b>6.3</b> Simple examples</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="likert.html"><a href="likert.html#stacked-bar-chart"><i class="fa fa-check"></i><b>6.3.1</b> Stacked bar chart</a></li>
+<li class="chapter" data-level="6.3.2" data-path="likert.html"><a href="likert.html#diverging-stacked-bar-chart"><i class="fa fa-check"></i><b>6.3.2</b> Diverging stacked bar chart</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="likert.html"><a href="likert.html#stacked-bar-chart-using-ggplot"><i class="fa fa-check"></i><b>6.4</b> Stacked bar chart using ggplot</a></li>
+<li class="chapter" data-level="6.5" data-path="likert.html"><a href="likert.html#theory-1"><i class="fa fa-check"></i><b>6.5</b> Theory</a></li>
+<li class="chapter" data-level="6.6" data-path="likert.html"><a href="likert.html#when-to-use"><i class="fa fa-check"></i><b>6.6</b> When to use</a></li>
+<li class="chapter" data-level="6.7" data-path="likert.html"><a href="likert.html#external-resources-1"><i class="fa fa-check"></i><b>6.7</b> External resources</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="multi-class-hexbins.html"><a href="multi-class-hexbins.html"><i class="fa fa-check"></i><b>7</b> Multi-class hexbins</a></li>
+<li class="chapter" data-level="8" data-path="visualization-in-time-series-analysis.html"><a href="visualization-in-time-series-analysis.html"><i class="fa fa-check"></i><b>8</b> Visualization in Time Series Analysis</a><ul>
+<li class="chapter" data-level="8.1" data-path="visualization-in-time-series-analysis.html"><a href="visualization-in-time-series-analysis.html#initiate-a-time-series-object"><i class="fa fa-check"></i><b>8.1</b> Initiate a Time series object:</a></li>
+<li class="chapter" data-level="8.2" data-path="visualization-in-time-series-analysis.html"><a href="visualization-in-time-series-analysis.html#plot-the-data"><i class="fa fa-check"></i><b>8.2</b> Plot the data:</a></li>
+<li class="chapter" data-level="8.3" data-path="visualization-in-time-series-analysis.html"><a href="visualization-in-time-series-analysis.html#transformation-of-nonstationary"><i class="fa fa-check"></i><b>8.3</b> Transformation of nonstationary:</a><ul>
+<li class="chapter" data-level="8.3.1" data-path="visualization-in-time-series-analysis.html"><a href="visualization-in-time-series-analysis.html#stationarity"><i class="fa fa-check"></i><b>8.3.1</b> Stationarity:</a></li>
+<li class="chapter" data-level="8.3.2" data-path="visualization-in-time-series-analysis.html"><a href="visualization-in-time-series-analysis.html#operations"><i class="fa fa-check"></i><b>8.3.2</b> Operations</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="visualization-in-time-series-analysis.html"><a href="visualization-in-time-series-analysis.html#acf-and-pacf-for-time-series"><i class="fa fa-check"></i><b>8.4</b> ACF and PACF for time series</a></li>
+<li class="chapter" data-level="8.5" data-path="visualization-in-time-series-analysis.html"><a href="visualization-in-time-series-analysis.html#full-model-yt-ttrend-sseasonality-ccycle"><i class="fa fa-check"></i><b>8.5</b> Full model: Yt = T(Trend) + S(Seasonality) +C(Cycle)</a><ul>
+<li class="chapter" data-level="8.5.1" data-path="visualization-in-time-series-analysis.html"><a href="visualization-in-time-series-analysis.html#trendt-linear-quadratic-etc.-for-normal-linear-model"><i class="fa fa-check"></i><b>8.5.1</b> Trend(T): Linear, Quadratic, etc. For normal linear model</a></li>
+<li class="chapter" data-level="8.5.2" data-path="visualization-in-time-series-analysis.html"><a href="visualization-in-time-series-analysis.html#seasonalitys"><i class="fa fa-check"></i><b>8.5.2</b> Seasonality(S):</a></li>
+<li class="chapter" data-level="8.5.3" data-path="visualization-in-time-series-analysis.html"><a href="visualization-in-time-series-analysis.html#cyclec"><i class="fa fa-check"></i><b>8.5.3</b> Cycle(C):</a></li>
+<li class="chapter" data-level="8.5.4" data-path="visualization-in-time-series-analysis.html"><a href="visualization-in-time-series-analysis.html#summary"><i class="fa fa-check"></i><b>8.5.4</b> Summary</a></li>
+<li class="chapter" data-level="8.5.5" data-path="visualization-in-time-series-analysis.html"><a href="visualization-in-time-series-analysis.html#reference"><i class="fa fa-check"></i><b>8.5.5</b> Reference:</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>IV Interactive Graphs</b></span></li>
+<li class="chapter" data-level="9" data-path="shiny.html"><a href="shiny.html"><i class="fa fa-check"></i><b>9</b> Shiny</a><ul>
+<li class="chapter" data-level="9.1" data-path="shiny.html"><a href="shiny.html#part-1-how-to-build-a-shiny-app"><i class="fa fa-check"></i><b>9.1</b> Part 1 How to Build a Shiny App</a></li>
+<li class="chapter" data-level="9.2" data-path="shiny.html"><a href="shiny.html#install-the-shiny-package"><i class="fa fa-check"></i><b>9.2</b> 1. Install the shiny package</a></li>
+<li class="chapter" data-level="9.3" data-path="shiny.html"><a href="shiny.html#template-for-creating-a-shiny-app"><i class="fa fa-check"></i><b>9.3</b> 2. Template for creating a shiny app</a></li>
+<li class="chapter" data-level="9.4" data-path="shiny.html"><a href="shiny.html#add-elements-to-user-interface-using-fluidpage"><i class="fa fa-check"></i><b>9.4</b> 3. Add elements to user interface using <code>fluidPage()</code></a><ul>
+<li class="chapter" data-level="9.4.1" data-path="shiny.html"><a href="shiny.html#input-functions"><i class="fa fa-check"></i><b>9.4.1</b> Input functions</a></li>
+<li class="chapter" data-level="9.4.2" data-path="shiny.html"><a href="shiny.html#output-functions"><i class="fa fa-check"></i><b>9.4.2</b> Output functions</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="shiny.html"><a href="shiny.html#build-output-in-server-instructions"><i class="fa fa-check"></i><b>9.5</b> 4. Build output in server instructions</a><ul>
+<li class="chapter" data-level="9.5.1" data-path="shiny.html"><a href="shiny.html#save-objects-you-want-to-display-to-output"><i class="fa fa-check"></i><b>9.5.1</b> (1): Save objects you want to display to <code>output$</code></a></li>
+<li class="chapter" data-level="9.5.2" data-path="shiny.html"><a href="shiny.html#build-objects-with-render"><i class="fa fa-check"></i><b>9.5.2</b> (2): Build objects with <code>render()</code></a></li>
+<li class="chapter" data-level="9.5.3" data-path="shiny.html"><a href="shiny.html#use-input-values-with-input"><i class="fa fa-check"></i><b>9.5.3</b> (3): Use input values with <code>input$</code></a></li>
+</ul></li>
+<li class="chapter" data-level="9.6" data-path="shiny.html"><a href="shiny.html#share-your-app"><i class="fa fa-check"></i><b>9.6</b> 5. Share your app</a><ul>
+<li class="chapter" data-level="9.6.1" data-path="shiny.html"><a href="shiny.html#save-your-app"><i class="fa fa-check"></i><b>9.6.1</b> Save your app</a></li>
+<li class="chapter" data-level="9.6.2" data-path="shiny.html"><a href="shiny.html#publish-your-app-on-shinyapps.io"><i class="fa fa-check"></i><b>9.6.2</b> Publish your app on Shinyapps.io</a></li>
+</ul></li>
+<li class="chapter" data-level="9.7" data-path="shiny.html"><a href="shiny.html#part-2-how-to-customize-reactions"><i class="fa fa-check"></i><b>9.7</b> Part 2 How to Customize Reactions</a></li>
+<li class="chapter" data-level="9.8" data-path="shiny.html"><a href="shiny.html#reactivity"><i class="fa fa-check"></i><b>9.8</b> 1. Reactivity</a><ul>
+<li class="chapter" data-level="9.8.1" data-path="shiny.html"><a href="shiny.html#what-is-reactivity"><i class="fa fa-check"></i><b>9.8.1</b> What is reactivity?</a></li>
+<li class="chapter" data-level="9.8.2" data-path="shiny.html"><a href="shiny.html#reactive-values"><i class="fa fa-check"></i><b>9.8.2</b> Reactive values</a></li>
+<li class="chapter" data-level="9.8.3" data-path="shiny.html"><a href="shiny.html#reactive-functions-reactive-toolkit"><i class="fa fa-check"></i><b>9.8.3</b> Reactive functions (reactive toolkit)</a></li>
+<li class="chapter" data-level="9.8.4" data-path="shiny.html"><a href="shiny.html#modularize-code-with-reactive"><i class="fa fa-check"></i><b>9.8.4</b> Modularize code with <code>reactive()</code></a></li>
+<li class="chapter" data-level="9.8.5" data-path="shiny.html"><a href="shiny.html#prevent-reactions-with-isolate"><i class="fa fa-check"></i><b>9.8.5</b> Prevent reactions with <code>isolate()</code></a></li>
+<li class="chapter" data-level="9.8.6" data-path="shiny.html"><a href="shiny.html#trigger-code-with-observeevent"><i class="fa fa-check"></i><b>9.8.6</b> Trigger code with <code>observeEvent()</code></a></li>
+<li class="chapter" data-level="9.8.7" data-path="shiny.html"><a href="shiny.html#delay-reactions-with-eventreactive"><i class="fa fa-check"></i><b>9.8.7</b> Delay reactions with <code>eventReactive()</code></a></li>
+<li class="chapter" data-level="9.8.8" data-path="shiny.html"><a href="shiny.html#manage-state-with-reactivevalues"><i class="fa fa-check"></i><b>9.8.8</b> Manage state with <code>reactiveValues()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="9.9" data-path="shiny.html"><a href="shiny.html#summary-1"><i class="fa fa-check"></i><b>9.9</b> 3. Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="ice-cream-survey.html"><a href="ice-cream-survey.html"><i class="fa fa-check"></i><b>10</b> Ice Cream Survey</a><ul>
+<li class="chapter" data-level="10.1" data-path="ice-cream-survey.html"><a href="ice-cream-survey.html#overview-2"><i class="fa fa-check"></i><b>10.1</b> Overview</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="ice-cream-survey.html"><a href="ice-cream-survey.html#description"><i class="fa fa-check"></i><b>10.1.1</b> Description</a></li>
+<li class="chapter" data-level="10.1.2" data-path="ice-cream-survey.html"><a href="ice-cream-survey.html#goals-of-this-community-contribution"><i class="fa fa-check"></i><b>10.1.2</b> Goals of this community contribution</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="ice-cream-survey.html"><a href="ice-cream-survey.html#loading-packages-and-reading-in-data"><i class="fa fa-check"></i><b>10.2</b> Loading packages and reading in data</a></li>
+<li class="chapter" data-level="10.3" data-path="ice-cream-survey.html"><a href="ice-cream-survey.html#understanding-what-cleaning-is-required"><i class="fa fa-check"></i><b>10.3</b> Understanding what cleaning is required</a></li>
+<li class="chapter" data-level="10.4" data-path="ice-cream-survey.html"><a href="ice-cream-survey.html#cleaning-and-prepping-the-data"><i class="fa fa-check"></i><b>10.4</b> Cleaning and prepping the data</a><ul>
+<li class="chapter" data-level="10.4.1" data-path="ice-cream-survey.html"><a href="ice-cream-survey.html#country"><i class="fa fa-check"></i><b>10.4.1</b> Country</a></li>
+<li class="chapter" data-level="10.4.2" data-path="ice-cream-survey.html"><a href="ice-cream-survey.html#flavor"><i class="fa fa-check"></i><b>10.4.2</b> Flavor</a></li>
+<li class="chapter" data-level="10.4.3" data-path="ice-cream-survey.html"><a href="ice-cream-survey.html#age"><i class="fa fa-check"></i><b>10.4.3</b> Age</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="ice-cream-survey.html"><a href="ice-cream-survey.html#visualizing-the-data"><i class="fa fa-check"></i><b>10.5</b> Visualizing the data</a><ul>
+<li class="chapter" data-level="10.5.1" data-path="ice-cream-survey.html"><a href="ice-cream-survey.html#getting-an-overview"><i class="fa fa-check"></i><b>10.5.1</b> Getting an overview</a></li>
+<li class="chapter" data-level="10.5.2" data-path="ice-cream-survey.html"><a href="ice-cream-survey.html#ice-cream-preferences-by-continent-and-age"><i class="fa fa-check"></i><b>10.5.2</b> Ice cream preferences by continent and age</a></li>
+</ul></li>
+<li class="chapter" data-level="10.6" data-path="ice-cream-survey.html"><a href="ice-cream-survey.html#takeaways"><i class="fa fa-check"></i><b>10.6</b> Takeaways</a></li>
+</ul></li>
+<li class="part"><span><b>V Other</b></span></li>
+<li class="chapter" data-level="11" data-path="self-reflection-demographical-discoveries-using-tinder-data.html"><a href="self-reflection-demographical-discoveries-using-tinder-data.html"><i class="fa fa-check"></i><b>11</b> Self-Reflection &amp; Demographical Discoveries Using Tinder Data</a><ul>
+<li class="chapter" data-level="11.1" data-path="self-reflection-demographical-discoveries-using-tinder-data.html"><a href="self-reflection-demographical-discoveries-using-tinder-data.html#introduction"><i class="fa fa-check"></i><b>11.1</b> Introduction</a><ul>
+<li class="chapter" data-level="11.1.1" data-path="self-reflection-demographical-discoveries-using-tinder-data.html"><a href="self-reflection-demographical-discoveries-using-tinder-data.html#for-the-taken-non-millennial-folk"><i class="fa fa-check"></i><b>11.1.1</b> For The Taken / Non-Millennial Folk</a></li>
+<li class="chapter" data-level="11.1.2" data-path="self-reflection-demographical-discoveries-using-tinder-data.html"><a href="self-reflection-demographical-discoveries-using-tinder-data.html#replicating-this-analysis-for-yourself"><i class="fa fa-check"></i><b>11.1.2</b> Replicating This Analysis For Yourself</a></li>
+<li class="chapter" data-level="11.1.3" data-path="self-reflection-demographical-discoveries-using-tinder-data.html"><a href="self-reflection-demographical-discoveries-using-tinder-data.html#protecting-the-innocent-and-not-so-innocent"><i class="fa fa-check"></i><b>11.1.3</b> Protecting The Innocent (and Not-So-Innocent)</a></li>
+<li class="chapter" data-level="11.1.4" data-path="self-reflection-demographical-discoveries-using-tinder-data.html"><a href="self-reflection-demographical-discoveries-using-tinder-data.html#a-fun-twist"><i class="fa fa-check"></i><b>11.1.4</b> A Fun Twist</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="self-reflection-demographical-discoveries-using-tinder-data.html"><a href="self-reflection-demographical-discoveries-using-tinder-data.html#analysis"><i class="fa fa-check"></i><b>11.2</b> Analysis</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="self-reflection-demographical-discoveries-using-tinder-data.html"><a href="self-reflection-demographical-discoveries-using-tinder-data.html#our-fun-new-tinder-statistics-amourmetrics"><i class="fa fa-check"></i><b>11.2.1</b> Our Fun New Tinder Statistics: “<em>Amourmetrics</em>”</a></li>
+<li class="chapter" data-level="11.2.2" data-path="self-reflection-demographical-discoveries-using-tinder-data.html"><a href="self-reflection-demographical-discoveries-using-tinder-data.html#all-time-statistics-a-demographical-discovery"><i class="fa fa-check"></i><b>11.2.2</b> All-Time Statistics &amp; A Demographical Discovery</a></li>
+<li class="chapter" data-level="11.2.3" data-path="self-reflection-demographical-discoveries-using-tinder-data.html"><a href="self-reflection-demographical-discoveries-using-tinder-data.html#its-like-batting-average-but-for-tinder"><i class="fa fa-check"></i><b>11.2.3</b> “It’s Like Batting Average, But For Tinder”</a></li>
+<li class="chapter" data-level="11.2.4" data-path="self-reflection-demographical-discoveries-using-tinder-data.html"><a href="self-reflection-demographical-discoveries-using-tinder-data.html#where-when-did-my-swiping-habits-change"><i class="fa fa-check"></i><b>11.2.4</b> Where &amp; When Did My Swiping Habits Change?</a></li>
+<li class="chapter" data-level="11.2.5" data-path="self-reflection-demographical-discoveries-using-tinder-data.html"><a href="self-reflection-demographical-discoveries-using-tinder-data.html#a-problem-with-dates"><i class="fa fa-check"></i><b>11.2.5</b> A Problem With Dates</a></li>
+<li class="chapter" data-level="11.2.6" data-path="self-reflection-demographical-discoveries-using-tinder-data.html"><a href="self-reflection-demographical-discoveries-using-tinder-data.html#overall-trends"><i class="fa fa-check"></i><b>11.2.6</b> Overall Trends</a></li>
+<li class="chapter" data-level="11.2.7" data-path="self-reflection-demographical-discoveries-using-tinder-data.html"><a href="self-reflection-demographical-discoveries-using-tinder-data.html#playing-hard-to-get"><i class="fa fa-check"></i><b>11.2.7</b> Playing Hard To Get</a></li>
+<li class="chapter" data-level="11.2.8" data-path="self-reflection-demographical-discoveries-using-tinder-data.html"><a href="self-reflection-demographical-discoveries-using-tinder-data.html#playing-the-game"><i class="fa fa-check"></i><b>11.2.8</b> Playing The Game</a></li>
+<li class="chapter" data-level="11.2.9" data-path="self-reflection-demographical-discoveries-using-tinder-data.html"><a href="self-reflection-demographical-discoveries-using-tinder-data.html#swipe-night-part-2"><i class="fa fa-check"></i><b>11.2.9</b> “Swipe Night, Part 2”</a></li>
+<li class="chapter" data-level="11.2.10" data-path="self-reflection-demographical-discoveries-using-tinder-data.html"><a href="self-reflection-demographical-discoveries-using-tinder-data.html#for-my-fellow-data-nerds-or-people-who-just-like-graphs"><i class="fa fa-check"></i><b>11.2.10</b> For My Fellow Data Nerds, Or People Who Just Like Graphs</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="self-reflection-demographical-discoveries-using-tinder-data.html"><a href="self-reflection-demographical-discoveries-using-tinder-data.html#conclusion"><i class="fa fa-check"></i><b>11.3</b> Conclusion</a><ul>
+<li class="chapter" data-level="11.3.1" data-path="self-reflection-demographical-discoveries-using-tinder-data.html"><a href="self-reflection-demographical-discoveries-using-tinder-data.html#dubious-demographics"><i class="fa fa-check"></i><b>11.3.1</b> Dubious Demographics</a></li>
+<li class="chapter" data-level="11.3.2" data-path="self-reflection-demographical-discoveries-using-tinder-data.html"><a href="self-reflection-demographical-discoveries-using-tinder-data.html#love-is-bored"><i class="fa fa-check"></i><b>11.3.2</b> Love Is Bored</a></li>
+<li class="chapter" data-level="11.3.3" data-path="self-reflection-demographical-discoveries-using-tinder-data.html"><a href="self-reflection-demographical-discoveries-using-tinder-data.html#does-location-matter-well-maybe."><i class="fa fa-check"></i><b>11.3.3</b> Does Location Matter? Well, Maybe.</a></li>
+<li class="chapter" data-level="11.3.4" data-path="self-reflection-demographical-discoveries-using-tinder-data.html"><a href="self-reflection-demographical-discoveries-using-tinder-data.html#the-cinderella-effect"><i class="fa fa-check"></i><b>11.3.4</b> The Cinderella Effect</a></li>
+<li class="chapter" data-level="11.3.5" data-path="self-reflection-demographical-discoveries-using-tinder-data.html"><a href="self-reflection-demographical-discoveries-using-tinder-data.html#playing-hard-to-get-may-a-be-real-thing"><i class="fa fa-check"></i><b>11.3.5</b> “Playing Hard To Get” May A Be Real Thing</a></li>
+<li class="chapter" data-level="11.3.6" data-path="self-reflection-demographical-discoveries-using-tinder-data.html"><a href="self-reflection-demographical-discoveries-using-tinder-data.html#can-we-solve-dating-using-machine-learning"><i class="fa fa-check"></i><b>11.3.6</b> Can We Solve Dating Using Machine Learning?</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="self-reflection-demographical-discoveries-using-tinder-data.html"><a href="self-reflection-demographical-discoveries-using-tinder-data.html#final-thoughts"><i class="fa fa-check"></i><b>11.4</b> Final Thoughts</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="wordcloud.html"><a href="wordcloud.html"><i class="fa fa-check"></i><b>12</b> Wordcloud</a><ul>
+<li class="chapter" data-level="12.1" data-path="wordcloud.html"><a href="wordcloud.html#introduction-1"><i class="fa fa-check"></i><b>12.1</b> 1. Introduction</a></li>
+<li class="chapter" data-level="12.2" data-path="wordcloud.html"><a href="wordcloud.html#demo-of-wordcloud2-package"><i class="fa fa-check"></i><b>12.2</b> 2. Demo of <code>wordcloud2</code> Package</a><ul>
+<li class="chapter" data-level="12.2.1" data-path="wordcloud.html"><a href="wordcloud.html#basic-wordcloud-graph"><i class="fa fa-check"></i><b>12.2.1</b> 2.0 Basic Wordcloud Graph</a></li>
+<li class="chapter" data-level="12.2.2" data-path="wordcloud.html"><a href="wordcloud.html#font-size"><i class="fa fa-check"></i><b>12.2.2</b> 2.1 Font Size</a></li>
+<li class="chapter" data-level="12.2.3" data-path="wordcloud.html"><a href="wordcloud.html#color-and-background-color"><i class="fa fa-check"></i><b>12.2.3</b> 2.2 Color and Background Color</a></li>
+<li class="chapter" data-level="12.2.4" data-path="wordcloud.html"><a href="wordcloud.html#shape"><i class="fa fa-check"></i><b>12.2.4</b> 2.3 Shape</a></li>
+<li class="chapter" data-level="12.2.5" data-path="wordcloud.html"><a href="wordcloud.html#rotation"><i class="fa fa-check"></i><b>12.2.5</b> 2.4 Rotation</a></li>
+<li class="chapter" data-level="12.2.6" data-path="wordcloud.html"><a href="wordcloud.html#language"><i class="fa fa-check"></i><b>12.2.6</b> 2.5 Language</a></li>
+<li class="chapter" data-level="12.2.7" data-path="wordcloud.html"><a href="wordcloud.html#customized-shape"><i class="fa fa-check"></i><b>12.2.7</b> 2.6 Customized shape</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html"><i class="fa fa-check"></i><b>13</b> Introduction to Stringr Stringr包入门详解</a><ul>
+<li class="chapter" data-level="13.1" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html#stringr-包的安装与调用"><i class="fa fa-check"></i><b>13.1</b> stringr 包的安装与调用</a><ul>
+<li class="chapter" data-level="13.1.1" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html#安装"><i class="fa fa-check"></i><b>13.1.1</b> 安装</a></li>
+<li class="chapter" data-level="13.1.2" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html#调用"><i class="fa fa-check"></i><b>13.1.2</b> 调用</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html#字符串匹配函数detect-matches"><i class="fa fa-check"></i><b>13.2</b> 字符串匹配函数(Detect Matches)</a><ul>
+<li class="chapter" data-level="13.2.1" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html#str_detectstring-pattern"><i class="fa fa-check"></i><b>13.2.1</b> str_detect(string, pattern)</a></li>
+<li class="chapter" data-level="13.2.2" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html#str_whichstring-pattern"><i class="fa fa-check"></i><b>13.2.2</b> str_which(string, pattern)</a></li>
+<li class="chapter" data-level="13.2.3" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html#str_countstring-pattern"><i class="fa fa-check"></i><b>13.2.3</b> str_count(string, pattern)</a></li>
+<li class="chapter" data-level="13.2.4" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html#str_locatestring-pattern"><i class="fa fa-check"></i><b>13.2.4</b> str_locate(string, pattern)</a></li>
+<li class="chapter" data-level="13.2.5" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html#str_locate_allstring-pattern"><i class="fa fa-check"></i><b>13.2.5</b> str_locate_all(string, pattern)</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html#字符串的截取函数subset-strings"><i class="fa fa-check"></i><b>13.3</b> 字符串的截取函数(Subset Strings)</a><ul>
+<li class="chapter" data-level="13.3.1" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html#str_substring-start-index-end-index"><i class="fa fa-check"></i><b>13.3.1</b> str_sub(string, start index, end index)</a></li>
+<li class="chapter" data-level="13.3.2" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html#str_subsetstringpattern"><i class="fa fa-check"></i><b>13.3.2</b> str_subset(string,pattern)</a></li>
+<li class="chapter" data-level="13.3.3" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html#str_extractstringpattern"><i class="fa fa-check"></i><b>13.3.3</b> str_extract(string,pattern)</a></li>
+<li class="chapter" data-level="13.3.4" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html#str_matchstring-pattern"><i class="fa fa-check"></i><b>13.3.4</b> str_match(string, pattern)</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html#字符串长度编辑函数manage-lengths"><i class="fa fa-check"></i><b>13.4</b> 字符串长度编辑函数(Manage Lengths)</a><ul>
+<li class="chapter" data-level="13.4.1" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html#str_lengthstring"><i class="fa fa-check"></i><b>13.4.1</b> str_length(string)</a></li>
+<li class="chapter" data-level="13.4.2" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html#str_padstring-width-side-cleft-rightboth-pad"><i class="fa fa-check"></i><b>13.4.2</b> str_pad((string, width, side = c(“left”, “right”,“both”), pad = &quot; &quot;)</a></li>
+<li class="chapter" data-level="13.4.3" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html#str_truncstring-width-side-cright-leftcenter-ellipsis"><i class="fa fa-check"></i><b>13.4.3</b> str_trunc(string, width, side = c(“right”, “left”,“center”), ellipsis = “…”)</a></li>
+<li class="chapter" data-level="13.4.4" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html#str_trimstring-side-cboth-left-right"><i class="fa fa-check"></i><b>13.4.4</b> str_trim(string, side = c(“both”, “left”, “right”))</a></li>
+</ul></li>
+<li class="chapter" data-level="13.5" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html#字符串变换与编辑函数mutate-strings"><i class="fa fa-check"></i><b>13.5</b> 字符串变换与编辑函数(Mutate Strings)</a><ul>
+<li class="chapter" data-level="13.5.1" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html#str_substringstart-indexend-index"><i class="fa fa-check"></i><b>13.5.1</b> str_sub(string,start index,end index)</a></li>
+<li class="chapter" data-level="13.5.2" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html#str_replacestringpatternreplacement"><i class="fa fa-check"></i><b>13.5.2</b> str_replace(string,pattern,replacement)</a></li>
+<li class="chapter" data-level="13.5.3" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html#str_replace_allstringpatternreplacement"><i class="fa fa-check"></i><b>13.5.3</b> str_replace_all(string,pattern,replacement)</a></li>
+<li class="chapter" data-level="13.5.4" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html#str_to_lowerstring"><i class="fa fa-check"></i><b>13.5.4</b> str_to_lower(string)</a></li>
+<li class="chapter" data-level="13.5.5" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html#str_to_upperstring"><i class="fa fa-check"></i><b>13.5.5</b> str_to_upper(string)</a></li>
+<li class="chapter" data-level="13.5.6" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html#str_to_titlestring"><i class="fa fa-check"></i><b>13.5.6</b> str_to_title(string)</a></li>
+</ul></li>
+<li class="chapter" data-level="13.6" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html#字符串分割与拼接函数join-and-split"><i class="fa fa-check"></i><b>13.6</b> 字符串分割与拼接函数(Join and Split)</a><ul>
+<li class="chapter" data-level="13.6.1" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html#str_c-sep-collapse-null"><i class="fa fa-check"></i><b>13.6.1</b> str_c(…, sep = &quot;&quot;, collapse = NULL)</a></li>
+<li class="chapter" data-level="13.6.2" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html#str_c-sep-collapse"><i class="fa fa-check"></i><b>13.6.2</b> str_c(…, sep = &quot;“, collapse =”&quot;)</a></li>
+<li class="chapter" data-level="13.6.3" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html#str_dupstring-times"><i class="fa fa-check"></i><b>13.6.3</b> str_dup(string, times)</a></li>
+<li class="chapter" data-level="13.6.4" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html#str_split_fixedstring-pattern-n"><i class="fa fa-check"></i><b>13.6.4</b> str_split_fixed((string, pattern, n)</a></li>
+<li class="chapter" data-level="13.6.5" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html#str_glue-.sep-.envir-parent.frame"><i class="fa fa-check"></i><b>13.6.5</b> str_glue(…, .sep = &quot;&quot;, .envir = parent.frame())</a></li>
+<li class="chapter" data-level="13.6.6" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html#str_glue_data.x-.sep-.envir-parent.frame-.na-na"><i class="fa fa-check"></i><b>13.6.6</b> str_glue_data(.x, …, .sep = &quot;“, .envir = parent.frame(), .na =”NA&quot;)</a></li>
+</ul></li>
+<li class="chapter" data-level="13.7" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html#字符串排序order-strings"><i class="fa fa-check"></i><b>13.7</b> 字符串排序(Order Strings)</a><ul>
+<li class="chapter" data-level="13.7.1" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html#str_sortstring"><i class="fa fa-check"></i><b>13.7.1</b> str_sort(string)</a></li>
+<li class="chapter" data-level="13.7.2" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html#str_orderstring"><i class="fa fa-check"></i><b>13.7.2</b> str_order(string)</a></li>
+</ul></li>
+<li class="chapter" data-level="13.8" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html#字符串的编译格式与显示格式修改函数encode-and-visualize-strings"><i class="fa fa-check"></i><b>13.8</b> 字符串的编译格式与显示格式修改函数(Encode and Visualize Strings)</a><ul>
+<li class="chapter" data-level="13.8.1" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html#str_convstring-encoding"><i class="fa fa-check"></i><b>13.8.1</b> str_conv(string, encoding)</a></li>
+<li class="chapter" data-level="13.8.2" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html#str_viewstring-pattern"><i class="fa fa-check"></i><b>13.8.2</b> str_view(string, pattern)</a></li>
+<li class="chapter" data-level="13.8.3" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html#str_wrapstringwidthindentexdent"><i class="fa fa-check"></i><b>13.8.3</b> str_wrap(string,width,indent,exdent)</a></li>
+</ul></li>
+<li class="chapter" data-level="13.9" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html#正则表达式regular-expression"><i class="fa fa-check"></i><b>13.9</b> 正则表达式(Regular Expression)</a><ul>
+<li class="chapter" data-level="13.9.1" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html#字符匹配"><i class="fa fa-check"></i><b>13.9.1</b> 字符匹配</a></li>
+<li class="chapter" data-level="13.9.2" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html#替换alternates"><i class="fa fa-check"></i><b>13.9.2</b> 替换(Alternates)</a></li>
+<li class="chapter" data-level="13.9.3" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html#锚点anchors"><i class="fa fa-check"></i><b>13.9.3</b> 锚点(Anchors)</a></li>
+<li class="chapter" data-level="13.9.4" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html#查找look-arounds"><i class="fa fa-check"></i><b>13.9.4</b> 查找(Look Arounds)</a></li>
+<li class="chapter" data-level="13.9.5" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html#数量词的使用quantifiers"><i class="fa fa-check"></i><b>13.9.5</b> 数量词的使用(Quantifiers)</a></li>
+<li class="chapter" data-level="13.9.6" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html#括号划分表达式并用转义号码替换"><i class="fa fa-check"></i><b>13.9.6</b> 括号划分表达式并用转义号码替换</a></li>
+</ul></li>
+<li class="chapter" data-level="13.10" data-path="introduction-to-stringr-stringr包入门详解.html"><a href="introduction-to-stringr-stringr包入门详解.html#参考文献reference"><i class="fa fa-check"></i><b>13.10</b> 参考文献(Reference)</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="latex-visualization.html"><a href="latex-visualization.html"><i class="fa fa-check"></i><b>14</b> Latex Visualization</a><ul>
+<li class="chapter" data-level="14.0.1" data-path="latex-visualization.html"><a href="latex-visualization.html#summary-2"><i class="fa fa-check"></i><b>14.0.1</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="ggmosaic.html"><a href="ggmosaic.html"><i class="fa fa-check"></i><b>15</b> ggmosaic</a><ul>
+<li class="chapter" data-level="15.1" data-path="ggmosaic.html"><a href="ggmosaic.html#overview-3"><i class="fa fa-check"></i><b>15.1</b> Overview</a></li>
+<li class="chapter" data-level="15.2" data-path="ggmosaic.html"><a href="ggmosaic.html#introduction-2"><i class="fa fa-check"></i><b>15.2</b> Introduction</a></li>
+<li class="chapter" data-level="15.3" data-path="ggmosaic.html"><a href="ggmosaic.html#order-of-splits"><i class="fa fa-check"></i><b>15.3</b> Order of splits</a></li>
+<li class="chapter" data-level="15.4" data-path="ggmosaic.html"><a href="ggmosaic.html#splitting-on-one-variablebinned-data"><i class="fa fa-check"></i><b>15.4</b> Splitting on One Variable(binned data)</a></li>
+<li class="chapter" data-level="15.5" data-path="ggmosaic.html"><a href="ggmosaic.html#splitting-on-one-variableunbinned-data"><i class="fa fa-check"></i><b>15.5</b> Splitting on One Variable(unbinned data)</a></li>
+<li class="chapter" data-level="15.6" data-path="ggmosaic.html"><a href="ggmosaic.html#splitting-on-two-variables"><i class="fa fa-check"></i><b>15.6</b> Splitting on Two Variables</a></li>
+<li class="chapter" data-level="15.7" data-path="ggmosaic.html"><a href="ggmosaic.html#splitting-on-three-variables"><i class="fa fa-check"></i><b>15.7</b> Splitting on Three Variables</a></li>
+<li class="chapter" data-level="15.8" data-path="ggmosaic.html"><a href="ggmosaic.html#adjusting-the-direction-of-splits"><i class="fa fa-check"></i><b>15.8</b> Adjusting the Direction of Splits</a></li>
+<li class="chapter" data-level="15.9" data-path="ggmosaic.html"><a href="ggmosaic.html#alternative-approach-conditional"><i class="fa fa-check"></i><b>15.9</b> Alternative approach: Conditional</a></li>
+<li class="chapter" data-level="15.10" data-path="ggmosaic.html"><a href="ggmosaic.html#alternative-approach-facetting"><i class="fa fa-check"></i><b>15.10</b> Alternative approach: Facetting</a></li>
+<li class="chapter" data-level="15.11" data-path="ggmosaic.html"><a href="ggmosaic.html#comparison-with-vcdmosaic"><i class="fa fa-check"></i><b>15.11</b> Comparison with vcd::mosaic</a></li>
+<li class="chapter" data-level="15.12" data-path="ggmosaic.html"><a href="ggmosaic.html#chinese-translation-ggmosaic马赛克图"><i class="fa fa-check"></i><b>15.12</b> Chinese Translation: ‘ggmosaic’（马赛克图）</a></li>
+<li class="chapter" data-level="15.13" data-path="ggmosaic.html"><a href="ggmosaic.html#引言"><i class="fa fa-check"></i><b>15.13</b> 引言</a></li>
+<li class="chapter" data-level="15.14" data-path="ggmosaic.html"><a href="ggmosaic.html#简介"><i class="fa fa-check"></i><b>15.14</b> 简介</a></li>
+<li class="chapter" data-level="15.15" data-path="ggmosaic.html"><a href="ggmosaic.html#分割的顺序"><i class="fa fa-check"></i><b>15.15</b> 分割的顺序</a></li>
+<li class="chapter" data-level="15.16" data-path="ggmosaic.html"><a href="ggmosaic.html#根据一个变量分割分箱数据"><i class="fa fa-check"></i><b>15.16</b> 根据一个变量分割（分箱数据）：</a></li>
+<li class="chapter" data-level="15.17" data-path="ggmosaic.html"><a href="ggmosaic.html#根据一个变量分割非分箱数据"><i class="fa fa-check"></i><b>15.17</b> 根据一个变量分割(非分箱数据):</a></li>
+<li class="chapter" data-level="15.18" data-path="ggmosaic.html"><a href="ggmosaic.html#根据两个变量分割"><i class="fa fa-check"></i><b>15.18</b> 根据两个变量分割</a></li>
+<li class="chapter" data-level="15.19" data-path="ggmosaic.html"><a href="ggmosaic.html#根据三个变量分割"><i class="fa fa-check"></i><b>15.19</b> 根据三个变量分割</a></li>
+<li class="chapter" data-level="15.20" data-path="ggmosaic.html"><a href="ggmosaic.html#调整切割的方向"><i class="fa fa-check"></i><b>15.20</b> 调整切割的方向</a></li>
+<li class="chapter" data-level="15.21" data-path="ggmosaic.html"><a href="ggmosaic.html#另外一种方法条件变量conditional"><i class="fa fa-check"></i><b>15.21</b> 另外一种方法:条件变量(Conditional)</a></li>
+<li class="chapter" data-level="15.22" data-path="ggmosaic.html"><a href="ggmosaic.html#另外一种方法块化facet"><i class="fa fa-check"></i><b>15.22</b> 另外一种方法:块化(Facet)</a></li>
+<li class="chapter" data-level="15.23" data-path="ggmosaic.html"><a href="ggmosaic.html#ggmosaic-vs-vcdmosaic"><i class="fa fa-check"></i><b>15.23</b> ‘ggmosaic’ vs vcd::‘mosaic’</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="web-scraping-using-rvest.html"><a href="web-scraping-using-rvest.html"><i class="fa fa-check"></i><b>16</b> Web scraping using rvest</a><ul>
+<li class="chapter" data-level="16.1" data-path="web-scraping-using-rvest.html"><a href="web-scraping-using-rvest.html#overview-4"><i class="fa fa-check"></i><b>16.1</b> 1 Overview</a></li>
+<li class="chapter" data-level="16.2" data-path="web-scraping-using-rvest.html"><a href="web-scraping-using-rvest.html#an-easy-example"><i class="fa fa-check"></i><b>16.2</b> 2 An Easy Example</a></li>
+<li class="chapter" data-level="16.3" data-path="web-scraping-using-rvest.html"><a href="web-scraping-using-rvest.html#html-basics"><i class="fa fa-check"></i><b>16.3</b> 3 HTML Basics</a><ul>
+<li class="chapter" data-level="16.3.1" data-path="web-scraping-using-rvest.html"><a href="web-scraping-using-rvest.html#access-the-source-code"><i class="fa fa-check"></i><b>16.3.1</b> 3.1 Access the source code</a></li>
+<li class="chapter" data-level="16.3.2" data-path="web-scraping-using-rvest.html"><a href="web-scraping-using-rvest.html#html-structures"><i class="fa fa-check"></i><b>16.3.2</b> 3.2 HTML structures</a></li>
+</ul></li>
+<li class="chapter" data-level="16.4" data-path="web-scraping-using-rvest.html"><a href="web-scraping-using-rvest.html#rvest"><i class="fa fa-check"></i><b>16.4</b> 4 Rvest</a><ul>
+<li class="chapter" data-level="16.4.1" data-path="web-scraping-using-rvest.html"><a href="web-scraping-using-rvest.html#html_nodes-and-html_node"><i class="fa fa-check"></i><b>16.4.1</b> 4.1 html_nodes and html_node</a></li>
+<li class="chapter" data-level="16.4.2" data-path="web-scraping-using-rvest.html"><a href="web-scraping-using-rvest.html#css-and-xpath"><i class="fa fa-check"></i><b>16.4.2</b> 4.2 css and xpath</a></li>
+</ul></li>
+<li class="chapter" data-level="16.5" data-path="web-scraping-using-rvest.html"><a href="web-scraping-using-rvest.html#more-examples"><i class="fa fa-check"></i><b>16.5</b> 5 More Examples</a><ul>
+<li class="chapter" data-level="16.5.1" data-path="web-scraping-using-rvest.html"><a href="web-scraping-using-rvest.html#scrape-links-using-attributes"><i class="fa fa-check"></i><b>16.5.1</b> 5.1 Scrape links using attributes</a></li>
+<li class="chapter" data-level="16.5.2" data-path="web-scraping-using-rvest.html"><a href="web-scraping-using-rvest.html#scrape-table"><i class="fa fa-check"></i><b>16.5.2</b> 5.2 Scrape Table</a></li>
+</ul></li>
+<li class="chapter" data-level="16.6" data-path="web-scraping-using-rvest.html"><a href="web-scraping-using-rvest.html#external-resources-2"><i class="fa fa-check"></i><b>16.6</b> 6 External Resources</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="rstudio-vs-jupyterlab-for-data-science.html"><a href="rstudio-vs-jupyterlab-for-data-science.html"><i class="fa fa-check"></i><b>17</b> RStudio vs JupyterLab for Data Science</a></li>
+<li class="chapter" data-level="18" data-path="dplyr-relational-databases.html"><a href="dplyr-relational-databases.html"><i class="fa fa-check"></i><b>18</b> Dplyr Relational Databases</a><ul>
+<li class="chapter" data-level="18.1" data-path="dplyr-relational-databases.html"><a href="dplyr-relational-databases.html#overview-5"><i class="fa fa-check"></i><b>18.1</b> 1.Overview</a></li>
+<li class="chapter" data-level="18.2" data-path="dplyr-relational-databases.html"><a href="dplyr-relational-databases.html#definition-of-relational-databases"><i class="fa fa-check"></i><b>18.2</b> 2.Definition of Relational Databases</a></li>
+<li class="chapter" data-level="18.3" data-path="dplyr-relational-databases.html"><a href="dplyr-relational-databases.html#r-packages"><i class="fa fa-check"></i><b>18.3</b> 3. R Packages</a></li>
+<li class="chapter" data-level="18.4" data-path="dplyr-relational-databases.html"><a href="dplyr-relational-databases.html#data-description-for-example"><i class="fa fa-check"></i><b>18.4</b> 4. Data description for example</a><ul>
+<li class="chapter" data-level="18.4.1" data-path="dplyr-relational-databases.html"><a href="dplyr-relational-databases.html#bis-library"><i class="fa fa-check"></i><b>18.4.1</b> 4.1 BIS Library</a></li>
+<li class="chapter" data-level="18.4.2" data-path="dplyr-relational-databases.html"><a href="dplyr-relational-databases.html#selected-data-sets"><i class="fa fa-check"></i><b>18.4.2</b> 4.2 Selected data sets</a></li>
+</ul></li>
+<li class="chapter" data-level="18.5" data-path="dplyr-relational-databases.html"><a href="dplyr-relational-databases.html#types-of-joins"><i class="fa fa-check"></i><b>18.5</b> 5. Types of joins</a><ul>
+<li class="chapter" data-level="18.5.1" data-path="dplyr-relational-databases.html"><a href="dplyr-relational-databases.html#left_join"><i class="fa fa-check"></i><b>18.5.1</b> 5.1 Left_join</a></li>
+<li class="chapter" data-level="18.5.2" data-path="dplyr-relational-databases.html"><a href="dplyr-relational-databases.html#right_join"><i class="fa fa-check"></i><b>18.5.2</b> 5.2. Right_join</a></li>
+<li class="chapter" data-level="18.5.3" data-path="dplyr-relational-databases.html"><a href="dplyr-relational-databases.html#inner_join"><i class="fa fa-check"></i><b>18.5.3</b> 5.3. Inner_join</a></li>
+<li class="chapter" data-level="18.5.4" data-path="dplyr-relational-databases.html"><a href="dplyr-relational-databases.html#full_join"><i class="fa fa-check"></i><b>18.5.4</b> 5.4. Full_join</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="the-first-step-to-analyse-a-dataset.html"><a href="the-first-step-to-analyse-a-dataset.html"><i class="fa fa-check"></i><b>19</b> The first step to analyse a dataset</a><ul>
+<li class="chapter" data-level="19.1" data-path="the-first-step-to-analyse-a-dataset.html"><a href="the-first-step-to-analyse-a-dataset.html#introduction-3"><i class="fa fa-check"></i><b>19.1</b> Introduction</a></li>
+<li class="chapter" data-level="19.2" data-path="the-first-step-to-analyse-a-dataset.html"><a href="the-first-step-to-analyse-a-dataset.html#a-glimpse-at-the-dataset"><i class="fa fa-check"></i><b>19.2</b> A glimpse at the dataset</a><ul>
+<li class="chapter" data-level="19.2.1" data-path="the-first-step-to-analyse-a-dataset.html"><a href="the-first-step-to-analyse-a-dataset.html#how-does-the-data-look-like"><i class="fa fa-check"></i><b>19.2.1</b> How does the data look like?</a></li>
+<li class="chapter" data-level="19.2.2" data-path="the-first-step-to-analyse-a-dataset.html"><a href="the-first-step-to-analyse-a-dataset.html#retrive-the-metadata"><i class="fa fa-check"></i><b>19.2.2</b> Retrive the metadata</a></li>
+</ul></li>
+<li class="chapter" data-level="19.3" data-path="the-first-step-to-analyse-a-dataset.html"><a href="the-first-step-to-analyse-a-dataset.html#dive-into-one-column"><i class="fa fa-check"></i><b>19.3</b> Dive into one column</a><ul>
+<li class="chapter" data-level="19.3.1" data-path="the-first-step-to-analyse-a-dataset.html"><a href="the-first-step-to-analyse-a-dataset.html#summarise-a-numerical-variable"><i class="fa fa-check"></i><b>19.3.1</b> Summarise a numerical variable</a></li>
+<li class="chapter" data-level="19.3.2" data-path="the-first-step-to-analyse-a-dataset.html"><a href="the-first-step-to-analyse-a-dataset.html#understand-a-categorical-variable"><i class="fa fa-check"></i><b>19.3.2</b> Understand a categorical variable</a></li>
+</ul></li>
+<li class="chapter" data-level="19.4" data-path="the-first-step-to-analyse-a-dataset.html"><a href="the-first-step-to-analyse-a-dataset.html#advanced-patterns-about-a-data-set"><i class="fa fa-check"></i><b>19.4</b> Advanced patterns about a data set</a><ul>
+<li class="chapter" data-level="19.4.1" data-path="the-first-step-to-analyse-a-dataset.html"><a href="the-first-step-to-analyse-a-dataset.html#locate-the-missing-values"><i class="fa fa-check"></i><b>19.4.1</b> Locate the missing values</a></li>
+<li class="chapter" data-level="19.4.2" data-path="the-first-step-to-analyse-a-dataset.html"><a href="the-first-step-to-analyse-a-dataset.html#find-the-outlier-for-numeric-values"><i class="fa fa-check"></i><b>19.4.2</b> Find the outlier for numeric values</a></li>
+<li class="chapter" data-level="19.4.3" data-path="the-first-step-to-analyse-a-dataset.html"><a href="the-first-step-to-analyse-a-dataset.html#find-out-the-correlations-among-variables"><i class="fa fa-check"></i><b>19.4.3</b> Find out the correlations among variables</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>VI Links</b></span></li>
+<li class="chapter" data-level="20" data-path="workshops.html"><a href="workshops.html"><i class="fa fa-check"></i><b>20</b> Workshops</a><ul>
+<li class="chapter" data-level="20.1" data-path="workshops.html"><a href="workshops.html#bookdown"><i class="fa fa-check"></i><b>20.1</b> bookdown</a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="cheatsheets.html"><a href="cheatsheets.html"><i class="fa fa-check"></i><b>21</b> Cheatsheets</a><ul>
+<li class="chapter" data-level="21.1" data-path="cheatsheets.html"><a href="cheatsheets.html#html-javascript-and-d3"><i class="fa fa-check"></i><b>21.1</b> HTML, JavaScript, and D3</a></li>
+<li class="chapter" data-level="21.2" data-path="cheatsheets.html"><a href="cheatsheets.html#leaflet"><i class="fa fa-check"></i><b>21.2</b> Leaflet</a></li>
+</ul></li>
+<li class="chapter" data-level="22" data-path="videos.html"><a href="videos.html"><i class="fa fa-check"></i><b>22</b> Videos</a><ul>
+<li class="chapter" data-level="22.1" data-path="videos.html"><a href="videos.html#cartodb"><i class="fa fa-check"></i><b>22.1</b> CartoDB</a></li>
+</ul></li>
+<li class="chapter" data-level="23" data-path="translation.html"><a href="translation.html"><i class="fa fa-check"></i><b>23</b> Translation</a><ul>
+<li class="chapter" data-level="23.1" data-path="translation.html"><a href="translation.html#translation-for-r-ggplot2-visualization-tutorials"><i class="fa fa-check"></i><b>23.1</b> Translation for R &amp; ggplot2 visualization tutorials</a></li>
+</ul></li>
+<li class="chapter" data-level="24" data-path="list-of-community-contribution.html"><a href="list-of-community-contribution.html"><i class="fa fa-check"></i><b>24</b> List of Community Contribution</a><ul>
+<li class="chapter" data-level="24.0.1" data-path="list-of-community-contribution.html"><a href="list-of-community-contribution.html#a-lighting-talk-in-class"><i class="fa fa-check"></i><b>24.0.1</b> * A lighting talk in class</a></li>
+<li class="chapter" data-level="24.0.2" data-path="list-of-community-contribution.html"><a href="list-of-community-contribution.html#a-cheatsheet"><i class="fa fa-check"></i><b>24.0.2</b> * A cheatsheet</a></li>
+<li class="chapter" data-level="24.0.3" data-path="list-of-community-contribution.html"><a href="list-of-community-contribution.html#a-series-of-tutorials"><i class="fa fa-check"></i><b>24.0.3</b> * A series of tutorials</a></li>
+<li class="chapter" data-level="24.0.4" data-path="list-of-community-contribution.html"><a href="list-of-community-contribution.html#a-workshop---shareyourwork"><i class="fa fa-check"></i><b>24.0.4</b> * A workshop - “ShareYouRWork”</a></li>
+</ul></li>
+<li class="chapter" data-level="25" data-path="hex-sticker.html"><a href="hex-sticker.html"><i class="fa fa-check"></i><b>25</b> Hex Sticker</a></li>
+<li class="chapter" data-level="26" data-path="edav-flowchart.html"><a href="edav-flowchart.html"><i class="fa fa-check"></i><b>26</b> EDAV Flowchart</a><ul>
+<li class="chapter" data-level="26.1" data-path="edav-flowchart.html"><a href="edav-flowchart.html#distribution"><i class="fa fa-check"></i><b>26.1</b> Distribution</a></li>
+<li class="chapter" data-level="26.2" data-path="edav-flowchart.html"><a href="edav-flowchart.html#correlation"><i class="fa fa-check"></i><b>26.2</b> Correlation</a></li>
+<li class="chapter" data-level="26.3" data-path="edav-flowchart.html"><a href="edav-flowchart.html#comparison"><i class="fa fa-check"></i><b>26.3</b> Comparison</a></li>
+<li class="chapter" data-level="26.4" data-path="edav-flowchart.html"><a href="edav-flowchart.html#patterns"><i class="fa fa-check"></i><b>26.4</b> Patterns</a></li>
+<li class="chapter" data-level="26.5" data-path="edav-flowchart.html"><a href="edav-flowchart.html#statistical-values-ex.-median-range"><i class="fa fa-check"></i><b>26.5</b> Statistical Values (ex. Median, Range)</a></li>
+<li class="chapter" data-level="26.6" data-path="edav-flowchart.html"><a href="edav-flowchart.html#time-related"><i class="fa fa-check"></i><b>26.6</b> Time Related</a></li>
+<li class="chapter" data-level="26.7" data-path="edav-flowchart.html"><a href="edav-flowchart.html#survey-data-likert-scale"><i class="fa fa-check"></i><b>26.7</b> Survey Data (Likert Scale)</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Community contributions for EDAV Fall 2019</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="introduction-to-stringr-stringr包入门详解" class="section level1">
+<h1><span class="header-section-number">Chapter 13</span> Introduction to Stringr Stringr包入门详解</h1>
+<p>Yichi Zhang and Mingfang Chang</p>
+<p>In this file, we will make an introduction of functions in stringr package with detailed examples in Chinese.</p>
+<div id="stringr-包的安装与调用" class="section level2">
+<h2><span class="header-section-number">13.1</span> stringr 包的安装与调用</h2>
+<div id="安装" class="section level3">
+<h3><span class="header-section-number">13.1.1</span> 安装</h3>
+<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb197-1" data-line-number="1"><span class="co">#从CRAN下载string 发行版本：</span></a>
+<a class="sourceLine" id="cb197-2" data-line-number="2"><span class="kw">install.packages</span>(<span class="st">&quot;stringr&quot;</span>)</a>
+<a class="sourceLine" id="cb197-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb197-4" data-line-number="4"><span class="co">#从Github下载：</span></a>
+<a class="sourceLine" id="cb197-5" data-line-number="5">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;tidyverse/stringr&quot;</span>)</a></code></pre></div>
+</div>
+<div id="调用" class="section level3">
+<h3><span class="header-section-number">13.1.2</span> 调用</h3>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb198-1" data-line-number="1"><span class="kw">library</span>(stringr)</a></code></pre></div>
+</div>
+</div>
+<div id="字符串匹配函数detect-matches" class="section level2">
+<h2><span class="header-section-number">13.2</span> 字符串匹配函数(Detect Matches)</h2>
+<div id="str_detectstring-pattern" class="section level3">
+<h3><span class="header-section-number">13.2.1</span> str_detect(string, pattern)</h3>
+<p>检测字符串中是否包含匹配字符，返回TRUE或FALSE。<br />
+示例：</p>
+<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb199-1" data-line-number="1">fruit &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;apple&quot;</span>, <span class="st">&quot;banana&quot;</span>, <span class="st">&quot;pear&quot;</span>, <span class="st">&quot;pineapple&quot;</span>)</a>
+<a class="sourceLine" id="cb199-2" data-line-number="2"><span class="kw">str_detect</span>(fruit, <span class="st">&quot;a&quot;</span>)</a></code></pre></div>
+<pre><code>## [1] TRUE TRUE TRUE TRUE</code></pre>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb201-1" data-line-number="1"><span class="kw">str_detect</span>(fruit, <span class="st">&quot;b&quot;</span>)</a></code></pre></div>
+<pre><code>## [1] FALSE  TRUE FALSE FALSE</code></pre>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb203-1" data-line-number="1"><span class="kw">str_detect</span>(<span class="st">&quot;this is an example&quot;</span>, <span class="st">&quot;an&quot;</span>)</a></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+</div>
+<div id="str_whichstring-pattern" class="section level3">
+<h3><span class="header-section-number">13.2.2</span> str_which(string, pattern)</h3>
+<p>查找字符串中匹配字符的索引，返回索引。<br />
+示例：</p>
+<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb205-1" data-line-number="1">fruit &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;apple&quot;</span>, <span class="st">&quot;banana&quot;</span>, <span class="st">&quot;pear&quot;</span>, <span class="st">&quot;pineapple&quot;</span>)</a>
+<a class="sourceLine" id="cb205-2" data-line-number="2"><span class="kw">str_which</span>(fruit, <span class="st">&quot;a&quot;</span>)</a></code></pre></div>
+<pre><code>## [1] 1 2 3 4</code></pre>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb207-1" data-line-number="1"><span class="kw">str_which</span>(fruit, <span class="st">&quot;p&quot;</span>)</a></code></pre></div>
+<pre><code>## [1] 1 3 4</code></pre>
+<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb209-1" data-line-number="1"><span class="kw">str_which</span>(<span class="st">&quot;example&quot;</span>, <span class="st">&quot;a&quot;</span>)</a></code></pre></div>
+<pre><code>## [1] 1</code></pre>
+</div>
+<div id="str_countstring-pattern" class="section level3">
+<h3><span class="header-section-number">13.2.3</span> str_count(string, pattern)</h3>
+<p>计数字符串匹配次数，返回计数。<br />
+示例：</p>
+<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb211-1" data-line-number="1">fruit &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;apple&quot;</span>, <span class="st">&quot;banana&quot;</span>, <span class="st">&quot;pear&quot;</span>, <span class="st">&quot;pineapple&quot;</span>)</a>
+<a class="sourceLine" id="cb211-2" data-line-number="2"><span class="kw">str_count</span>(fruit, <span class="st">&quot;a&quot;</span>)</a></code></pre></div>
+<pre><code>## [1] 1 3 1 1</code></pre>
+<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb213-1" data-line-number="1"><span class="kw">str_count</span>(fruit, <span class="st">&quot;p&quot;</span>)</a></code></pre></div>
+<pre><code>## [1] 2 0 1 3</code></pre>
+<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb215-1" data-line-number="1"><span class="kw">str_count</span>(<span class="st">&quot;example&quot;</span>, <span class="st">&quot;am&quot;</span>)</a></code></pre></div>
+<pre><code>## [1] 1</code></pre>
+</div>
+<div id="str_locatestring-pattern" class="section level3">
+<h3><span class="header-section-number">13.2.4</span> str_locate(string, pattern)</h3>
+<p>找到字符串中第一个匹配字符的位置，返回位置，如无匹配则返回NA。<br />
+示例：</p>
+<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb217-1" data-line-number="1">fruit &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;apple&quot;</span>, <span class="st">&quot;banana&quot;</span>, <span class="st">&quot;pear&quot;</span>, <span class="st">&quot;pineapple&quot;</span>)</a>
+<a class="sourceLine" id="cb217-2" data-line-number="2"> <span class="kw">str_locate</span>(fruit, <span class="st">&quot;a&quot;</span>)</a></code></pre></div>
+<pre><code>##      start end
+## [1,]     1   1
+## [2,]     2   2
+## [3,]     3   3
+## [4,]     5   5</code></pre>
+<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb219-1" data-line-number="1"><span class="kw">str_locate</span>(fruit, <span class="st">&quot;p&quot;</span>)</a></code></pre></div>
+<pre><code>##      start end
+## [1,]     2   2
+## [2,]    NA  NA
+## [3,]     1   1
+## [4,]     1   1</code></pre>
+<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb221-1" data-line-number="1"><span class="kw">str_locate</span>(<span class="st">&quot;example&quot;</span>, <span class="st">&quot;x&quot;</span>)</a></code></pre></div>
+<pre><code>##      start end
+## [1,]     2   2</code></pre>
+</div>
+<div id="str_locate_allstring-pattern" class="section level3">
+<h3><span class="header-section-number">13.2.5</span> str_locate_all(string, pattern)</h3>
+<p>找到字符串中所有匹配字符的位置，返回位置。<br />
+示例：</p>
+<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb223-1" data-line-number="1">fruit &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;apple&quot;</span>, <span class="st">&quot;banana&quot;</span>, <span class="st">&quot;pear&quot;</span>, <span class="st">&quot;pineapple&quot;</span>)</a>
+<a class="sourceLine" id="cb223-2" data-line-number="2"><span class="kw">str_locate_all</span>(fruit,<span class="st">&quot;p&quot;</span>)</a></code></pre></div>
+<pre><code>## [[1]]
+##      start end
+## [1,]     2   2
+## [2,]     3   3
+## 
+## [[2]]
+##      start end
+## 
+## [[3]]
+##      start end
+## [1,]     1   1
+## 
+## [[4]]
+##      start end
+## [1,]     1   1
+## [2,]     6   6
+## [3,]     7   7</code></pre>
+<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb225-1" data-line-number="1"><span class="kw">str_locate_all</span>(<span class="st">&quot;example&quot;</span>, <span class="st">&quot;e&quot;</span>)</a></code></pre></div>
+<pre><code>## [[1]]
+##      start end
+## [1,]     1   1
+## [2,]     7   7</code></pre>
+</div>
+</div>
+<div id="字符串的截取函数subset-strings" class="section level2">
+<h2><span class="header-section-number">13.3</span> 字符串的截取函数(Subset Strings)</h2>
+<div id="str_substring-start-index-end-index" class="section level3">
+<h3><span class="header-section-number">13.3.1</span> str_sub(string, start index, end index)</h3>
+<p>用于直接通过索引来分割字符串，并返回起始索引到结束索引中的全部字符。<br />
+示例：<br /></p>
+<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb227-1" data-line-number="1">x &lt;-<span class="st">&#39;Hello World&#39;</span></a>
+<a class="sourceLine" id="cb227-2" data-line-number="2"><span class="kw">str_sub</span>(x,<span class="dv">1</span>,<span class="dv">3</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;Hel&quot;</code></pre>
+<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb229-1" data-line-number="1"><span class="kw">str_sub</span>(x,<span class="op">-</span><span class="dv">7</span>,<span class="op">-</span><span class="dv">2</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;o Worl&quot;</code></pre>
+<p>函数的输入也可以是一串字符串。<br /></p>
+<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb231-1" data-line-number="1">x &lt;-<span class="kw">c</span>(<span class="st">&#39;Apple&#39;</span>,<span class="st">&#39;Banana&#39;</span>,<span class="st">&#39;Strawberry&#39;</span>)</a>
+<a class="sourceLine" id="cb231-2" data-line-number="2"><span class="kw">str_sub</span>(x,<span class="dv">2</span>,<span class="dv">4</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;ppl&quot; &quot;ana&quot; &quot;tra&quot;</code></pre>
+</div>
+<div id="str_subsetstringpattern" class="section level3">
+<h3><span class="header-section-number">13.3.2</span> str_subset(string,pattern)</h3>
+<p>输入一个字符串或者一系列字符串，并给定一种模式，返还拥有这种模式的字符串。<br />
+示例：</p>
+<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb233-1" data-line-number="1">x &lt;-<span class="st">&#39;Hello World&#39;</span></a>
+<a class="sourceLine" id="cb233-2" data-line-number="2"><span class="kw">str_subset</span>(x,<span class="st">&#39;ell&#39;</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;Hello World&quot;</code></pre>
+<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb235-1" data-line-number="1">y &lt;-<span class="kw">c</span>(<span class="st">&#39;Apple&#39;</span>,<span class="st">&#39;Banana&#39;</span>,<span class="st">&#39;Strawberry&#39;</span>)</a>
+<a class="sourceLine" id="cb235-2" data-line-number="2"><span class="kw">str_subset</span>(y,<span class="st">&#39;ana&#39;</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;Banana&quot;</code></pre>
+<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb237-1" data-line-number="1">z &lt;-<span class="st">&#39;Hello World&#39;</span></a>
+<a class="sourceLine" id="cb237-2" data-line-number="2"><span class="kw">str_subset</span>(x,<span class="st">&#39;zzz&#39;</span>)</a></code></pre></div>
+<pre><code>## character(0)</code></pre>
+</div>
+<div id="str_extractstringpattern" class="section level3">
+<h3><span class="header-section-number">13.3.3</span> str_extract(string,pattern)</h3>
+<p>输入一个字符串或者一串字符串，给定一种模式,返回在每个字符串中第一个符合模式的子字符串，如果某个字符串中并没有我们输入的模式，则返回空值NA，这个函数的输出类型是一个包含多个字符串的向量。<br />
+示例：<br /></p>
+<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb239-1" data-line-number="1">string1 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;fruit&#39;</span>, <span class="st">&#39;Test Score:89&#39;</span>, <span class="st">&#39;Test Score:170&#39;</span>,<span class="st">&#39;tiger&#39;</span>)</a>
+<a class="sourceLine" id="cb239-2" data-line-number="2">pattern1 &lt;-<span class="st">&#39;ui&#39;</span></a>
+<a class="sourceLine" id="cb239-3" data-line-number="3"><span class="kw">str_extract</span>(string1,pattern1)</a></code></pre></div>
+<pre><code>## [1] &quot;ui&quot; NA   NA   NA</code></pre>
+<p>对于这个函数使用正则表达式来表达字符串的模式会更有意义，我们将会在最后具体讨论正则表达式的写法。<br /></p>
+<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb241-1" data-line-number="1">pattern2 &lt;-<span class="st"> &quot;[A-Z][a-z]*[:]</span><span class="ch">\\</span><span class="st">d*&quot;</span></a>
+<a class="sourceLine" id="cb241-2" data-line-number="2"><span class="kw">str_extract</span>(string1,pattern2)</a></code></pre></div>
+<pre><code>## [1] NA          &quot;Score:89&quot;  &quot;Score:170&quot; NA</code></pre>
+<p>我们也可以使用函数str_extract_all(string， pattern) 返回每个字符串当中所有符合的模式的子字符串（并不只是第一个）。<br />
+示例：<br /></p>
+<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb243-1" data-line-number="1">string2 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;fruit&#39;</span>, <span class="st">&#39;Test Score:89 Ratescore:77&#39;</span>, <span class="st">&#39;Test Score:170&#39;</span>,<span class="st">&#39;tiger&#39;</span>)</a>
+<a class="sourceLine" id="cb243-2" data-line-number="2">pattern2 &lt;-<span class="st"> &quot;([A-Z][a-z]*[:])(</span><span class="ch">\\</span><span class="st">d*)&quot;</span></a>
+<a class="sourceLine" id="cb243-3" data-line-number="3"><span class="kw">str_extract_all</span>(string2,pattern2)</a></code></pre></div>
+<pre><code>## [[1]]
+## character(0)
+## 
+## [[2]]
+## [1] &quot;Score:89&quot;     &quot;Ratescore:77&quot;
+## 
+## [[3]]
+## [1] &quot;Score:170&quot;
+## 
+## [[4]]
+## character(0)</code></pre>
+</div>
+<div id="str_matchstring-pattern" class="section level3">
+<h3><span class="header-section-number">13.3.4</span> str_match(string, pattern)</h3>
+<p>输入一个字符串或者一串字符串，给定一种模式,返回在每个字符串中第一个符合模式的子字符串，如果某个字符串中并没有我们输入的模式，则返回空值NA,但是不同于str_extract()函数， 此函数返回一个包含多个字符串的矩阵。<br />
+示例：<br /></p>
+<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb245-1" data-line-number="1"><span class="kw">str_match</span>(string2,pattern2)</a></code></pre></div>
+<pre><code>##      [,1]        [,2]     [,3] 
+## [1,] NA          NA       NA   
+## [2,] &quot;Score:89&quot;  &quot;Score:&quot; &quot;89&quot; 
+## [3,] &quot;Score:170&quot; &quot;Score:&quot; &quot;170&quot;
+## [4,] NA          NA       NA</code></pre>
+<p>我们也可以用str_match_all()函数去返回所有符合模式的子字符串,在返回的矩阵中，第一列代表一个符合模式的完整的子字符串，后面的每一列代表了完整的子字符串中的每一个组，这个组是在正则表达式中用括号分割开来的（例如“([A-Z][a-z]<em>[:])(\d</em>)” 中， 第一个组就是([A-Z][a-z]<em>[:])， 第二个组则是(\d</em>)）。<br /></p>
+<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb247-1" data-line-number="1"><span class="kw">str_match_all</span>(string2,pattern2)</a></code></pre></div>
+<pre><code>## [[1]]
+##      [,1] [,2] [,3]
+## 
+## [[2]]
+##      [,1]           [,2]         [,3]
+## [1,] &quot;Score:89&quot;     &quot;Score:&quot;     &quot;89&quot;
+## [2,] &quot;Ratescore:77&quot; &quot;Ratescore:&quot; &quot;77&quot;
+## 
+## [[3]]
+##      [,1]        [,2]     [,3] 
+## [1,] &quot;Score:170&quot; &quot;Score:&quot; &quot;170&quot;
+## 
+## [[4]]
+##      [,1] [,2] [,3]</code></pre>
+</div>
+</div>
+<div id="字符串长度编辑函数manage-lengths" class="section level2">
+<h2><span class="header-section-number">13.4</span> 字符串长度编辑函数(Manage Lengths)</h2>
+<div id="str_lengthstring" class="section level3">
+<h3><span class="header-section-number">13.4.1</span> str_length(string)</h3>
+<p>返回字符串长度，即所含字符个数。<br />
+示例：</p>
+<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb249-1" data-line-number="1">fruit &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;apple&quot;</span>, <span class="st">&quot;banana&quot;</span>, <span class="st">&quot;pear&quot;</span>, <span class="st">&quot;pineapple&quot;</span>)</a>
+<a class="sourceLine" id="cb249-2" data-line-number="2"><span class="kw">str_length</span>(fruit)</a></code></pre></div>
+<pre><code>## [1] 5 6 4 9</code></pre>
+<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb251-1" data-line-number="1"><span class="kw">str_length</span>(<span class="st">&quot;example&quot;</span>)</a></code></pre></div>
+<pre><code>## [1] 7</code></pre>
+<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb253-1" data-line-number="1"><span class="kw">str_length</span>(<span class="st">&quot; &quot;</span>)</a></code></pre></div>
+<pre><code>## [1] 1</code></pre>
+<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb255-1" data-line-number="1"><span class="kw">str_length</span>(<span class="st">&quot;&quot;</span>)</a></code></pre></div>
+<pre><code>## [1] 0</code></pre>
+</div>
+<div id="str_padstring-width-side-cleft-rightboth-pad" class="section level3">
+<h3><span class="header-section-number">13.4.2</span> str_pad((string, width, side = c(“left”, “right”,“both”), pad = &quot; &quot;)</h3>
+<p>用所给字符填充字符串至所给长度，可总左边或右边或两边填充，返回填充后字符串。默认值为从左边以空格填充至所给长度。如果所给长度比字符串长度短，则返回原字符串。<br />
+示例：</p>
+<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb257-1" data-line-number="1">fruit &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;apple&quot;</span>, <span class="st">&quot;banana&quot;</span>, <span class="st">&quot;pear&quot;</span>, <span class="st">&quot;pineapple&quot;</span>)</a>
+<a class="sourceLine" id="cb257-2" data-line-number="2"><span class="kw">str_pad</span>(fruit, <span class="dv">17</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;            apple&quot; &quot;           banana&quot; &quot;             pear&quot;
+## [4] &quot;        pineapple&quot;</code></pre>
+<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb259-1" data-line-number="1"><span class="kw">str_pad</span>(fruit, <span class="dv">17</span>, <span class="st">&quot;both&quot;</span>, <span class="st">&quot;*&quot;</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;******apple******&quot; &quot;*****banana******&quot; &quot;******pear*******&quot;
+## [4] &quot;****pineapple****&quot;</code></pre>
+<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb261-1" data-line-number="1"><span class="kw">str_pad</span>(fruit, <span class="dv">17</span>, <span class="st">&quot;left&quot;</span>, <span class="st">&quot; &quot;</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;            apple&quot; &quot;           banana&quot; &quot;             pear&quot;
+## [4] &quot;        pineapple&quot;</code></pre>
+<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb263-1" data-line-number="1"><span class="kw">str_pad</span>(fruit, <span class="dv">17</span>, <span class="st">&quot;right&quot;</span>, <span class="st">&quot;-&quot;</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;apple------------&quot; &quot;banana-----------&quot; &quot;pear-------------&quot;
+## [4] &quot;pineapple--------&quot;</code></pre>
+<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb265-1" data-line-number="1"><span class="kw">str_pad</span>(<span class="st">&quot;example&quot;</span>, <span class="dv">11</span>, <span class="st">&quot;both&quot;</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;  example  &quot;</code></pre>
+<div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb267-1" data-line-number="1"><span class="kw">str_pad</span>(<span class="st">&quot;another&quot;</span>, <span class="dv">3</span>, <span class="st">&quot;both&quot;</span>,<span class="st">&quot;*&quot;</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;another&quot;</code></pre>
+</div>
+<div id="str_truncstring-width-side-cright-leftcenter-ellipsis" class="section level3">
+<h3><span class="header-section-number">13.4.3</span> str_trunc(string, width, side = c(“right”, “left”,“center”), ellipsis = “…”)</h3>
+<p>从所给方向截取字符串并替换为所给字符至所给长度，可以从左边或右边或中间截取，默认为从左边截取，默认替换字符为“…”，返回编辑后字符串。<br />
+示例：</p>
+<div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb269-1" data-line-number="1">fruit &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;apple&quot;</span>, <span class="st">&quot;banana&quot;</span>, <span class="st">&quot;pear&quot;</span>, <span class="st">&quot;pineapple&quot;</span>)</a>
+<a class="sourceLine" id="cb269-2" data-line-number="2"><span class="kw">str_trunc</span>(fruit, <span class="dv">3</span>,<span class="st">&quot;left&quot;</span>, <span class="st">&quot;-&quot;</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;-le&quot; &quot;-na&quot; &quot;-ar&quot; &quot;-le&quot;</code></pre>
+<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb271-1" data-line-number="1"><span class="kw">str_trunc</span>(fruit, <span class="dv">4</span>,<span class="st">&quot;center&quot;</span>, <span class="st">&quot;*&quot;</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;ap*e&quot; &quot;ba*a&quot; &quot;pear&quot; &quot;pi*e&quot;</code></pre>
+<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb273-1" data-line-number="1"><span class="kw">str_trunc</span>(fruit, <span class="dv">5</span>,<span class="st">&quot;right&quot;</span>, <span class="st">&quot;%&quot;</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;apple&quot; &quot;bana%&quot; &quot;pear&quot;  &quot;pine%&quot;</code></pre>
+<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb275-1" data-line-number="1"><span class="kw">str_trunc</span>(<span class="st">&quot;example&quot;</span>, <span class="dv">5</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;ex...&quot;</code></pre>
+</div>
+<div id="str_trimstring-side-cboth-left-right" class="section level3">
+<h3><span class="header-section-number">13.4.4</span> str_trim(string, side = c(“both”, “left”, “right”))</h3>
+<p>去掉字符串开头或/和结尾的空格，可以去掉左边或右边或两边的空格，默认为去掉两边空格，返回去掉空格后的字符串。<br />
+示例：</p>
+<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb277-1" data-line-number="1">fruit &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;apple&quot;</span>, <span class="st">&quot;banana&quot;</span>, <span class="st">&quot;pear&quot;</span>, <span class="st">&quot;pineapple&quot;</span>)</a>
+<a class="sourceLine" id="cb277-2" data-line-number="2"><span class="kw">str_trim</span>(fruit)</a></code></pre></div>
+<pre><code>## [1] &quot;apple&quot;     &quot;banana&quot;    &quot;pear&quot;      &quot;pineapple&quot;</code></pre>
+<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb279-1" data-line-number="1"><span class="kw">str_trim</span>(<span class="st">&quot; example1  &quot;</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;example1&quot;</code></pre>
+<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb281-1" data-line-number="1"><span class="kw">str_trim</span>(<span class="st">&quot; example2 &quot;</span>, <span class="st">&quot;left&quot;</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;example2 &quot;</code></pre>
+<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb283-1" data-line-number="1"><span class="kw">str_trim</span>(<span class="st">&quot; example3 &quot;</span>, <span class="st">&quot;right&quot;</span>)</a></code></pre></div>
+<pre><code>## [1] &quot; example3&quot;</code></pre>
+<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb285-1" data-line-number="1"><span class="kw">str_trim</span>(<span class="st">&quot; example4 &quot;</span>, <span class="st">&quot;both&quot;</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;example4&quot;</code></pre>
+</div>
+</div>
+<div id="字符串变换与编辑函数mutate-strings" class="section level2">
+<h2><span class="header-section-number">13.5</span> 字符串变换与编辑函数(Mutate Strings)</h2>
+<div id="str_substringstart-indexend-index" class="section level3">
+<h3><span class="header-section-number">13.5.1</span> str_sub(string,start index,end index)</h3>
+<p>可用于返回所有输入的字符串中，从起始索引到结束索引的子字符串。<br />
+示例：<br /></p>
+<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb287-1" data-line-number="1">f &lt;-<span class="kw">c</span>(<span class="st">&#39;Apple&#39;</span>,<span class="st">&#39;Banana&#39;</span>,<span class="st">&#39;Strawberry&#39;</span>)</a>
+<a class="sourceLine" id="cb287-2" data-line-number="2"><span class="kw">str_sub</span>(f,<span class="dv">1</span>,<span class="dv">3</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;App&quot; &quot;Ban&quot; &quot;Str&quot;</code></pre>
+<p>也可用于替换1所有输入的字符串中，从起始索引到结束索引的子字符串，用于替换的字符串取决的使用者自己定义并指向这个函数的字符串。<br />
+示例：<br /></p>
+<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb289-1" data-line-number="1">f &lt;-<span class="kw">c</span>(<span class="st">&#39;Apple&#39;</span>,<span class="st">&#39;Banana&#39;</span>,<span class="st">&#39;Strawberry&#39;</span>)</a>
+<a class="sourceLine" id="cb289-2" data-line-number="2"><span class="kw">str_sub</span>(f,<span class="dv">1</span>,<span class="dv">3</span>)&lt;-<span class="st">&#39;hello&#39;</span></a>
+<a class="sourceLine" id="cb289-3" data-line-number="3"><span class="kw">print</span>(f)</a></code></pre></div>
+<pre><code>## [1] &quot;hellole&quot;      &quot;helloana&quot;     &quot;helloawberry&quot;</code></pre>
+</div>
+<div id="str_replacestringpatternreplacement" class="section level3">
+<h3><span class="header-section-number">13.5.2</span> str_replace(string,pattern,replacement)</h3>
+<p>找个输入法的字符串中第一个符合我们定义的模式的子字符串并用我们输入的替换字符串替换。<br />
+示例：<br /></p>
+<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb291-1" data-line-number="1">string3 &lt;-<span class="st"> &#39;exploratary data annlysis&#39;</span></a>
+<a class="sourceLine" id="cb291-2" data-line-number="2"><span class="kw">str_replace</span>(string3,<span class="st">&#39;exploratary&#39;</span>,<span class="st">&#39;Visulization&#39;</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;Visulization data annlysis&quot;</code></pre>
+<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb293-1" data-line-number="1">string2 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;fruit&#39;</span>, <span class="st">&#39;Test Score:89 Ratescore:77&#39;</span>, <span class="st">&#39;Test Score:170&#39;</span>,<span class="st">&#39;tiger&#39;</span>)</a>
+<a class="sourceLine" id="cb293-2" data-line-number="2">pattern2 &lt;-<span class="st"> &quot;([A-Z][a-z]*[:])(</span><span class="ch">\\</span><span class="st">d*)&quot;</span></a>
+<a class="sourceLine" id="cb293-3" data-line-number="3"><span class="kw">str_replace</span>(string2,pattern2,<span class="st">&#39;Replacement&#39;</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;fruit&quot;                         &quot;Test Replacement Ratescore:77&quot;
+## [3] &quot;Test Replacement&quot;              &quot;tiger&quot;</code></pre>
+</div>
+<div id="str_replace_allstringpatternreplacement" class="section level3">
+<h3><span class="header-section-number">13.5.3</span> str_replace_all(string,pattern,replacement)</h3>
+<p>找个输入法的字符串中所有符合我们定义的模式的子字符串并用我们输入替换字符串替换,如果这个字符串中不存在我们定义的模式，直接返还原本的字符串。<br />
+示例：<br /></p>
+<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb295-1" data-line-number="1">string3 &lt;-<span class="st"> &#39;exploratary data annlysis and data Visulization&#39;</span></a>
+<a class="sourceLine" id="cb295-2" data-line-number="2"><span class="kw">str_replace_all</span>(string3,<span class="st">&#39;data&#39;</span>,<span class="st">&#39;Visulization&#39;</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;exploratary Visulization annlysis and Visulization Visulization&quot;</code></pre>
+<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb297-1" data-line-number="1">string2 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;fruit&#39;</span>, <span class="st">&#39;Test Score:89 Ratescore:77&#39;</span>, <span class="st">&#39;Test Score:170&#39;</span>,<span class="st">&#39;tiger&#39;</span>)</a>
+<a class="sourceLine" id="cb297-2" data-line-number="2">pattern2 &lt;-<span class="st"> &quot;([A-Z][a-z]*[:])(</span><span class="ch">\\</span><span class="st">d*)&quot;</span></a>
+<a class="sourceLine" id="cb297-3" data-line-number="3"><span class="kw">str_replace_all</span>(string2,pattern2,<span class="st">&#39;Replacement&#39;</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;fruit&quot;                        &quot;Test Replacement Replacement&quot;
+## [3] &quot;Test Replacement&quot;             &quot;tiger&quot;</code></pre>
+</div>
+<div id="str_to_lowerstring" class="section level3">
+<h3><span class="header-section-number">13.5.4</span> str_to_lower(string)</h3>
+<p>将一个字符串或者一个字符串的向量全部变为小写格式。<br />
+示例：<br /></p>
+<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb299-1" data-line-number="1">upper &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;FFF&#39;</span>,<span class="st">&#39;Task&#39;</span>,<span class="st">&#39;Community CONTRIBUTION&#39;</span>)</a>
+<a class="sourceLine" id="cb299-2" data-line-number="2"><span class="kw">str_to_lower</span>(upper)</a></code></pre></div>
+<pre><code>## [1] &quot;fff&quot;                    &quot;task&quot;                  
+## [3] &quot;community contribution&quot;</code></pre>
+<p>由于不同的国家有不同的大小写规则，我们可以用参数locale去规定在这个小写转变格式中所使用的规则（每个国家的规则有国家的英文缩写表示，具体课查看维基百科https://zh.wikipedia.org/wiki/ISO_639-1%E4%BB%A3%E7%A0%81%E8%A1%A8 语言ISO639表格）。<br /></p>
+<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb301-1" data-line-number="1">upper &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;FFF&#39;</span>,<span class="st">&#39;Task&#39;</span>,<span class="st">&#39;Community CONTRIBUTION&#39;</span>)</a>
+<a class="sourceLine" id="cb301-2" data-line-number="2"><span class="kw">str_to_lower</span>(upper,<span class="dt">locale =</span> <span class="st">&#39;en&#39;</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;fff&quot;                    &quot;task&quot;                  
+## [3] &quot;community contribution&quot;</code></pre>
+</div>
+<div id="str_to_upperstring" class="section level3">
+<h3><span class="header-section-number">13.5.5</span> str_to_upper(string)</h3>
+<p>将一个字符串或者一个字符串的向量全部变为大写格式。<br />
+示例：<br /></p>
+<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb303-1" data-line-number="1">lower1 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;FFF&#39;</span>,<span class="st">&#39;Task&#39;</span>,<span class="st">&#39;Community CONTRIBUTION&#39;</span>)</a>
+<a class="sourceLine" id="cb303-2" data-line-number="2"><span class="kw">str_to_upper</span>(lower1)</a></code></pre></div>
+<pre><code>## [1] &quot;FFF&quot;                    &quot;TASK&quot;                  
+## [3] &quot;COMMUNITY CONTRIBUTION&quot;</code></pre>
+<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb305-1" data-line-number="1"><span class="kw">str_to_upper</span>(lower1,<span class="dt">locale =</span> <span class="st">&#39;en&#39;</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;FFF&quot;                    &quot;TASK&quot;                  
+## [3] &quot;COMMUNITY CONTRIBUTION&quot;</code></pre>
+</div>
+<div id="str_to_titlestring" class="section level3">
+<h3><span class="header-section-number">13.5.6</span> str_to_title(string)</h3>
+<p>将一个字符串或者一个字符串组成的向量变换称标题格式（每个单词的首字母大写）。<br />
+示例：<br /></p>
+<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb307-1" data-line-number="1"><span class="kw">str_to_title</span>(lower1)</a></code></pre></div>
+<pre><code>## [1] &quot;Fff&quot;                    &quot;Task&quot;                  
+## [3] &quot;Community Contribution&quot;</code></pre>
+<div class="sourceCode" id="cb309"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb309-1" data-line-number="1"><span class="kw">str_to_title</span>(lower1,<span class="dt">locale =</span> <span class="st">&#39;en&#39;</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;Fff&quot;                    &quot;Task&quot;                  
+## [3] &quot;Community Contribution&quot;</code></pre>
+</div>
+</div>
+<div id="字符串分割与拼接函数join-and-split" class="section level2">
+<h2><span class="header-section-number">13.6</span> 字符串分割与拼接函数(Join and Split)</h2>
+<div id="str_c-sep-collapse-null" class="section level3">
+<h3><span class="header-section-number">13.6.1</span> str_c(…, sep = &quot;&quot;, collapse = NULL)</h3>
+<p>将多个字符串拼接成单个字符串，字符串间可添加分割字符，默认分割字符为空字符，返回拼接后字符串。 <br />
+示例：</p>
+<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb311-1" data-line-number="1"><span class="kw">str_c</span>(<span class="st">&quot;this&quot;</span>, <span class="st">&quot;is&quot;</span>, <span class="st">&quot;an&quot;</span>, <span class="st">&quot;example1&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>, <span class="dt">collapse =</span> <span class="ot">NULL</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;thisisanexample1&quot;</code></pre>
+<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb313-1" data-line-number="1"><span class="kw">str_c</span>(<span class="st">&quot;this&quot;</span>, <span class="st">&quot;is&quot;</span>, <span class="st">&quot;an&quot;</span>, <span class="st">&quot;example2&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot; &quot;</span>, <span class="dt">collapse =</span> <span class="ot">NULL</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;this is an example2&quot;</code></pre>
+<div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb315-1" data-line-number="1"><span class="kw">str_c</span>(<span class="st">&quot;this&quot;</span>, <span class="st">&quot;is&quot;</span>, <span class="st">&quot;an&quot;</span>, <span class="st">&quot;example3&quot;</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;thisisanexample3&quot;</code></pre>
+</div>
+<div id="str_c-sep-collapse" class="section level3">
+<h3><span class="header-section-number">13.6.2</span> str_c(…, sep = &quot;“, collapse =”&quot;)</h3>
+<p>将一个字符串向量拼接为单个字符串，字符串间可添加分割字符，默认分割字符为空字符，返回拼接后字符串。<br />
+示例：</p>
+<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb317-1" data-line-number="1"><span class="kw">str_c</span>(<span class="kw">c</span>(<span class="st">&quot;this&quot;</span>, <span class="st">&quot;is&quot;</span>, <span class="st">&quot;an&quot;</span>, <span class="st">&quot;example1&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>, <span class="dt">collapse =</span> <span class="st">&quot;&quot;</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;thisisanexample1&quot;</code></pre>
+<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb319-1" data-line-number="1"><span class="kw">str_c</span>(<span class="kw">c</span>(<span class="st">&quot;this&quot;</span>, <span class="st">&quot;is&quot;</span>, <span class="st">&quot;an&quot;</span>, <span class="st">&quot;example2&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>, <span class="dt">collapse =</span> <span class="st">&quot;*&quot;</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;this*is*an*example2&quot;</code></pre>
+</div>
+<div id="str_dupstring-times" class="section level3">
+<h3><span class="header-section-number">13.6.3</span> str_dup(string, times)</h3>
+<p>多次复制字符串，返回复制后字符串。<br />
+示例：</p>
+<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb321-1" data-line-number="1">fruit &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;apple&quot;</span>, <span class="st">&quot;banana&quot;</span>, <span class="st">&quot;pear&quot;</span>, <span class="st">&quot;pineapple&quot;</span>)</a>
+<a class="sourceLine" id="cb321-2" data-line-number="2"><span class="kw">str_dup</span>(fruit, <span class="dv">3</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;appleappleapple&quot;             &quot;bananabananabanana&quot;         
+## [3] &quot;pearpearpear&quot;                &quot;pineapplepineapplepineapple&quot;</code></pre>
+<div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb323-1" data-line-number="1"><span class="kw">str_dup</span>(<span class="st">&quot;example&quot;</span>, <span class="dv">7</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;exampleexampleexampleexampleexampleexampleexample&quot;</code></pre>
+</div>
+<div id="str_split_fixedstring-pattern-n" class="section level3">
+<h3><span class="header-section-number">13.6.4</span> str_split_fixed((string, pattern, n)</h3>
+<p>以所给字符将字符串分割成所给数量的字符串，返回分割后的结果。<br />
+示例：</p>
+<div class="sourceCode" id="cb325"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb325-1" data-line-number="1">fruit &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;app le&quot;</span>, <span class="st">&quot;bana na&quot;</span>, <span class="st">&quot;p ear&quot;</span>, <span class="st">&quot;pinea pple&quot;</span>)</a>
+<a class="sourceLine" id="cb325-2" data-line-number="2"><span class="kw">str_split_fixed</span>(fruit, <span class="st">&quot; &quot;</span>, <span class="dv">2</span>)</a></code></pre></div>
+<pre><code>##      [,1]    [,2]  
+## [1,] &quot;app&quot;   &quot;le&quot;  
+## [2,] &quot;bana&quot;  &quot;na&quot;  
+## [3,] &quot;p&quot;     &quot;ear&quot; 
+## [4,] &quot;pinea&quot; &quot;pple&quot;</code></pre>
+<div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb327-1" data-line-number="1"><span class="kw">str_split_fixed</span>(<span class="st">&quot;this is an example2&quot;</span>, <span class="st">&quot; &quot;</span>, <span class="dv">3</span>)</a></code></pre></div>
+<pre><code>##      [,1]   [,2] [,3]         
+## [1,] &quot;this&quot; &quot;is&quot; &quot;an example2&quot;</code></pre>
+</div>
+<div id="str_glue-.sep-.envir-parent.frame" class="section level3">
+<h3><span class="header-section-number">13.6.5</span> str_glue(…, .sep = &quot;&quot;, .envir = parent.frame())</h3>
+<p>在字符串内替换变量，变量可在函数内定义，可以连接多个字符串并以所给分隔字符分隔，返回替换后字符串。<br />
+示例：</p>
+<div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb329-1" data-line-number="1"><span class="kw">str_glue</span>(<span class="st">&quot;This is {apple}&quot;</span>, <span class="st">&quot; and this is not {banana}.&quot;</span>, <span class="dt">.sep=</span><span class="st">&quot;,&quot;</span>,<span class="dt">apple =</span> <span class="st">&quot;apple&quot;</span>, <span class="dt">banana =</span> <span class="st">&quot;banana&quot;</span>)</a></code></pre></div>
+<pre><code>## This is apple, and this is not banana.</code></pre>
+<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb331-1" data-line-number="1">pineapple&lt;-<span class="st">&quot;pineapple&quot;</span></a>
+<a class="sourceLine" id="cb331-2" data-line-number="2"><span class="kw">str_glue</span>(<span class="st">&quot;This is {pineapple}&quot;</span>)</a></code></pre></div>
+<pre><code>## This is pineapple</code></pre>
+</div>
+<div id="str_glue_data.x-.sep-.envir-parent.frame-.na-na" class="section level3">
+<h3><span class="header-section-number">13.6.6</span> str_glue_data(.x, …, .sep = &quot;“, .envir = parent.frame(), .na =”NA&quot;)</h3>
+<p>在字符串内替换变量，变量可在函数内以环境、列表、数据框等形式定义，可以连接多个字符串并以所给分隔字符分隔，返回替换后字符串。<br />
+示例：</p>
+<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb333-1" data-line-number="1"><span class="kw">str_glue_data</span>(<span class="kw">list</span>(<span class="dt">a=</span><span class="st">&quot;apple&quot;</span>, <span class="dt">b=</span><span class="st">&quot;banana&quot;</span>), <span class="st">&quot;This is {a}&quot;</span>, <span class="st">&quot;this is not {b}&quot;</span>, <span class="dt">.sep=</span><span class="st">&quot;,&quot;</span>)</a></code></pre></div>
+<pre><code>## This is apple,this is not banana</code></pre>
+<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb335-1" data-line-number="1">fruit &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;apple&quot;</span>, <span class="st">&quot;banana&quot;</span>, <span class="st">&quot;pear&quot;</span>, <span class="st">&quot;pineapple&quot;</span>)</a></code></pre></div>
+</div>
+</div>
+<div id="字符串排序order-strings" class="section level2">
+<h2><span class="header-section-number">13.7</span> 字符串排序(Order Strings)</h2>
+<div id="str_sortstring" class="section level3">
+<h3><span class="header-section-number">13.7.1</span> str_sort(string)</h3>
+<p>根据输入的参数，给输入的字符串向量排序。<br />
+示例：<br /></p>
+<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb336-1" data-line-number="1">order &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;FFF&#39;</span>,<span class="st">&#39;Task&#39;</span>,<span class="st">&#39;Community CONTRIBUTION&#39;</span>)</a>
+<a class="sourceLine" id="cb336-2" data-line-number="2"><span class="co">#给名叫order的字符串向量按照字母顺序从前到后排序</span></a>
+<a class="sourceLine" id="cb336-3" data-line-number="3"><span class="kw">str_sort</span>(order)</a></code></pre></div>
+<pre><code>## [1] &quot;Community CONTRIBUTION&quot; &quot;FFF&quot;                   
+## [3] &quot;Task&quot;</code></pre>
+<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb338-1" data-line-number="1"><span class="co">#给名叫order的字符串向量按照字母顺序从后到前排序</span></a>
+<a class="sourceLine" id="cb338-2" data-line-number="2"><span class="kw">str_sort</span>(order,<span class="dt">decreasing =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;Task&quot;                   &quot;FFF&quot;                   
+## [3] &quot;Community CONTRIBUTION&quot;</code></pre>
+<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb340-1" data-line-number="1">orderNA &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;FFF&#39;</span>,<span class="st">&#39;Task&#39;</span>,<span class="st">&#39;Community CONTRIBUTION&#39;</span>,<span class="ot">NA</span>)</a>
+<a class="sourceLine" id="cb340-2" data-line-number="2"><span class="co">#给名叫orderNA的字符串向量按照字母顺序从前到后的排序并且把空值排在最后面</span></a>
+<a class="sourceLine" id="cb340-3" data-line-number="3"><span class="kw">str_sort</span>(orderNA,<span class="dt">na_last =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;Community CONTRIBUTION&quot; &quot;FFF&quot;                   
+## [3] &quot;Task&quot;                   NA</code></pre>
+</div>
+<div id="str_orderstring" class="section level3">
+<h3><span class="header-section-number">13.7.2</span> str_order(string)</h3>
+<p>此函数与str_sort()的排序方法和使用方法基本一致，两个函数的主要区别在于str_order()返回的是索引的顺序而不是一个排序过后的新字符串向量。<br />
+示例：<br /></p>
+<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb342-1" data-line-number="1">order2 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;FFF&#39;</span>,<span class="st">&#39;Task&#39;</span>,<span class="st">&#39;Community CONTRIBUTION&#39;</span>)</a>
+<a class="sourceLine" id="cb342-2" data-line-number="2"><span class="kw">str_sort</span>(order2)</a></code></pre></div>
+<pre><code>## [1] &quot;Community CONTRIBUTION&quot; &quot;FFF&quot;                   
+## [3] &quot;Task&quot;</code></pre>
+<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb344-1" data-line-number="1"><span class="kw">str_order</span>(order2)</a></code></pre></div>
+<pre><code>## [1] 3 1 2</code></pre>
+<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb346-1" data-line-number="1">order2 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;FFF&#39;</span>,<span class="st">&#39;Task&#39;</span>,<span class="st">&#39;Community CONTRIBUTION&#39;</span>)</a>
+<a class="sourceLine" id="cb346-2" data-line-number="2"><span class="co">#排序的顺序变为字母表的顺序从后到前</span></a>
+<a class="sourceLine" id="cb346-3" data-line-number="3"><span class="kw">str_sort</span>(order2,<span class="dt">decreasing =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;Task&quot;                   &quot;FFF&quot;                   
+## [3] &quot;Community CONTRIBUTION&quot;</code></pre>
+<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb348-1" data-line-number="1"><span class="kw">str_order</span>(order2, <span class="dt">decreasing =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<pre><code>## [1] 2 1 3</code></pre>
+<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb350-1" data-line-number="1">orderNA &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;FFF&#39;</span>,<span class="st">&#39;Task&#39;</span>,<span class="st">&#39;Community CONTRIBUTION&#39;</span>,<span class="ot">NA</span>)</a>
+<a class="sourceLine" id="cb350-2" data-line-number="2"><span class="co">#将NA排在所有字符串的最后面</span></a>
+<a class="sourceLine" id="cb350-3" data-line-number="3"><span class="kw">str_sort</span>(orderNA,<span class="dt">na_last =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;Community CONTRIBUTION&quot; &quot;FFF&quot;                   
+## [3] &quot;Task&quot;                   NA</code></pre>
+<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb352-1" data-line-number="1"><span class="kw">str_order</span>(orderNA, <span class="dt">na_last =</span><span class="ot">TRUE</span>)</a></code></pre></div>
+<pre><code>## [1] 3 1 2 4</code></pre>
+</div>
+</div>
+<div id="字符串的编译格式与显示格式修改函数encode-and-visualize-strings" class="section level2">
+<h2><span class="header-section-number">13.8</span> 字符串的编译格式与显示格式修改函数(Encode and Visualize Strings)</h2>
+<div id="str_convstring-encoding" class="section level3">
+<h3><span class="header-section-number">13.8.1</span> str_conv(string, encoding)</h3>
+<p>更改当前字符串的编码格式。<br />
+示例：<br /></p>
+<div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb354-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">charToRaw</span>(<span class="st">&#39;武汉欢迎你&#39;</span>)</a>
+<a class="sourceLine" id="cb354-2" data-line-number="2"><span class="co">#将武汉欢迎你变成字符节</span></a>
+<a class="sourceLine" id="cb354-3" data-line-number="3"><span class="kw">print</span>(x)</a></code></pre></div>
+<pre><code>##  [1] e6 ad a6 e6 b1 89 e6 ac a2 e8 bf 8e e4 bd a0</code></pre>
+<div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb356-1" data-line-number="1"><span class="co">#将原始的字符节x用UTF-8的编码格式从新编码</span></a>
+<a class="sourceLine" id="cb356-2" data-line-number="2"><span class="kw">str_conv</span>(x, <span class="st">&quot;UTF-8&quot;</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;武汉欢迎你&quot;</code></pre>
+<div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb358-1" data-line-number="1"><span class="co">#使用stringi::stri_enc_list()能返回整个r中完整的编码格式表</span></a></code></pre></div>
+</div>
+<div id="str_viewstring-pattern" class="section level3">
+<h3><span class="header-section-number">13.8.2</span> str_view(string, pattern)</h3>
+<p>通过html的形式显示我们输入的模式在字符串中第一个出现的位置的位置。<br />
+示例：<br /></p>
+<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb359-1" data-line-number="1"><span class="kw">str_view</span>(<span class="st">&quot;hello world&quot;</span>, <span class="st">&quot;world&quot;</span>)</a></code></pre></div>
+<div id="htmlwidget-0fc0be8e39fe7341c9d7" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0fc0be8e39fe7341c9d7">{"x":{"html":"<ul>\n  <li>hello <span class='match'>world<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb360-1" data-line-number="1"><span class="kw">str_view</span>(<span class="st">&quot;hello world world&quot;</span>, <span class="st">&quot;world&quot;</span>)</a></code></pre></div>
+<p><div id="htmlwidget-e82935fe9862cadbfed8" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e82935fe9862cadbfed8">{"x":{"html":"<ul>\n  <li>hello <span class='match'>world<\/span> world<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+我们同时也可以使用函数str_view_all(string, pattern)去显示我们输入的字符串中所有和我们所选择的模式匹配的子字符串的位置。<br />
+示例：<br /></p>
+<div class="sourceCode" id="cb361"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb361-1" data-line-number="1"><span class="kw">str_view_all</span>(<span class="st">&quot;hello world world&quot;</span>, <span class="st">&quot;world&quot;</span>)</a></code></pre></div>
+<div id="htmlwidget-53de4784b4de6682ed03" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-53de4784b4de6682ed03">{"x":{"html":"<ul>\n  <li>hello <span class='match'>world<\/span> <span class='match'>world<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb362"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb362-1" data-line-number="1"><span class="kw">str_view_all</span>(<span class="st">&#39;Test Score:89 Ratescore:77&#39;</span>,<span class="st">&quot;([A-Z][a-z]*[:])(</span><span class="ch">\\</span><span class="st">d*)&quot;</span>)</a></code></pre></div>
+<div id="htmlwidget-2f129082533c0130a98f" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2f129082533c0130a98f">{"x":{"html":"<ul>\n  <li>Test <span class='match'>Score:89<\/span> <span class='match'>Ratescore:77<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="str_wrapstringwidthindentexdent" class="section level3">
+<h3><span class="header-section-number">13.8.3</span> str_wrap(string,width,indent,exdent)</h3>
+<p>改变字符串的显示格式。<br />
+示例：<br /></p>
+<div class="sourceCode" id="cb363"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb363-1" data-line-number="1">data &lt;-<span class="st"> &#39;Data analysis is a process of inspecting, cleansing, transforming and modeling data with the goal of discovering useful information, informing conclusion and supporting decision-making. Data analysis has multiple facets and approaches, encompassing diverse techniques under a variety of names, and is used in different business, science, and social science domains. In today</span><span class="ch">\&#39;</span><span class="st">s business world, data analysis plays a role in making decisions more scientific and helping businesses operate more effectively.&#39;</span></a>
+<a class="sourceLine" id="cb363-2" data-line-number="2"><span class="co"># the text above come from wikipedia</span></a></code></pre></div>
+<div class="sourceCode" id="cb364"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb364-1" data-line-number="1"><span class="co">#width规定了字符串每一行的长度，这里我们让字符串data每隔50个字符就换一次行</span></a>
+<a class="sourceLine" id="cb364-2" data-line-number="2"><span class="kw">cat</span>(<span class="kw">str_wrap</span>(data, <span class="dt">width =</span> <span class="dv">50</span>, <span class="dt">indent =</span> <span class="dv">0</span>, <span class="dt">exdent =</span> <span class="dv">0</span>),<span class="st">&#39;</span><span class="ch">\n</span><span class="st">&#39;</span>)</a></code></pre></div>
+<pre><code>## Data analysis is a process of inspecting,
+## cleansing, transforming and modeling data with the
+## goal of discovering useful information, informing
+## conclusion and supporting decision-making. Data
+## analysis has multiple facets and approaches,
+## encompassing diverse techniques under a variety of
+## names, and is used in different business, science,
+## and social science domains. In today&#39;s business
+## world, data analysis plays a role in making
+## decisions more scientific and helping businesses
+## operate more effectively.</code></pre>
+<div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb366-1" data-line-number="1"><span class="co">#indent决定了字符串第一行的缩进长度，这里我们选择缩进长度10，也就是第一行在一个空格之后开始</span></a>
+<a class="sourceLine" id="cb366-2" data-line-number="2"><span class="kw">cat</span>(<span class="kw">str_wrap</span>(data, <span class="dt">width =</span> <span class="dv">50</span>, <span class="dt">indent =</span> <span class="dv">10</span>, <span class="dt">exdent =</span> <span class="dv">0</span>),<span class="st">&#39;</span><span class="ch">\n</span><span class="st">&#39;</span>)</a></code></pre></div>
+<pre><code>##           Data analysis is a process of inspecting,
+## cleansing, transforming and modeling data with the
+## goal of discovering useful information, informing
+## conclusion and supporting decision-making. Data
+## analysis has multiple facets and approaches,
+## encompassing diverse techniques under a variety of
+## names, and is used in different business, science,
+## and social science domains. In today&#39;s business
+## world, data analysis plays a role in making
+## decisions more scientific and helping businesses
+## operate more effectively.</code></pre>
+<div class="sourceCode" id="cb368"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb368-1" data-line-number="1"><span class="co">#exdent决定了字符串除了第一行所有其他行的缩进长度，这里我们选择缩进长度15，也就是除了第一行，每行前面都有15个空格</span></a>
+<a class="sourceLine" id="cb368-2" data-line-number="2"><span class="kw">cat</span>(<span class="kw">str_wrap</span>(data, <span class="dt">width =</span> <span class="dv">50</span>, <span class="dt">indent =</span> <span class="dv">0</span>, <span class="dt">exdent =</span> <span class="dv">15</span>),<span class="st">&#39;</span><span class="ch">\n</span><span class="st">&#39;</span>)</a></code></pre></div>
+<pre><code>## Data analysis is a process of inspecting,
+##                cleansing, transforming and modeling data with the
+##                goal of discovering useful information, informing
+##                conclusion and supporting decision-making. Data
+##                analysis has multiple facets and approaches,
+##                encompassing diverse techniques under a variety of
+##                names, and is used in different business, science,
+##                and social science domains. In today&#39;s business
+##                world, data analysis plays a role in making
+##                decisions more scientific and helping businesses
+##                operate more effectively.</code></pre>
+</div>
+</div>
+<div id="正则表达式regular-expression" class="section level2">
+<h2><span class="header-section-number">13.9</span> 正则表达式(Regular Expression)</h2>
+<div id="字符匹配" class="section level3">
+<h3><span class="header-section-number">13.9.1</span> 字符匹配</h3>
+<p>在stringr 函数中，pattern参数可以正则表达式的形式表示。在R语言中，正则表达式以字符串形式表示。</p>
+<p>‘a’ 在正则表达式中单个字母代表的就是一个字母本身 <br />
+\.   \?   \(   \}  等 当我们想表示一个符号的时候，以符号本身表示一个符号并在前面加一个斜杠<br />
+\n 代表换行<br />
+\t 代表一个缩进，即跳格<br />
+\s 代表任意空格<br />
+\S 代表非空格字符<br />
+\d 代表任意数字字符<br />
+\D 代表任意非数字字符<br />
+\w 代表任意字字符<br />
+\W 代表任意非字字符<br />
+\b 代表词边界<br />
+\B 代表非词边界<br />
+[:digit]  代表0-9之间的任意数字<br />
+[:alpha]  代表a-z,和A-Z之间的任意字母<br />
+[:lower:]  代表a-z之间的任意字母<br />
+[:upper:]  代表A-Z之间的任意字母<br />
+[:xdigit:]  代表16进制中任意的数字(0-9和A-F)<br />
+[:alumn:]  代表任意数字或字母<br />
+[:graph:]  代表任意数字,字母,或者符号<br />
+[:print:]  代表任意数字,字母,符号,或者空格<br />
+[:spcae:]  代表空格,用法与\s相同<br />
+[:blank:]  代表空格或者跳格(缩进)但不包括换行<br />
+.  代表任意字符除了换行<br /></p>
+<p>由于很多常规字符不能直接以字符串的形式来表达，所以我们需要在带有斜杠的正则表达式前面额外加上一个斜杠，使相对应的正则表达式能以字符串的形式储存<br />
+例如：<br />
+\n 在字符串中的表达为’\\n’<br />
+\s 在字符串中的表达为’\\s’<br />
+\w 在字符串中的表达为’\\w’<br />
+等等<br /></p>
+</div>
+<div id="替换alternates" class="section level3">
+<h3><span class="header-section-number">13.9.2</span> 替换(Alternates)</h3>
+<p>‘|’ 表示或者(or)， 例如 ‘ab|d’表示’ab’ 或’d’ 都能被匹配。 <br /></p>
+<div class="sourceCode" id="cb370"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb370-1" data-line-number="1"><span class="co">#&#39;wk|kkk&#39;表示字符串中所有的&#39;wk&#39; 或&#39;kkk&#39; 都能被匹配。</span></a>
+<a class="sourceLine" id="cb370-2" data-line-number="2"><span class="kw">str_view_all</span>(<span class="st">&#39;w.asdgwkad.dfkkk.qwwerthj&#39;</span>,<span class="st">&#39;wk|kkk&#39;</span>) </a></code></pre></div>
+<div id="htmlwidget-a4ddfc51056dd1e14614" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a4ddfc51056dd1e14614">{"x":{"html":"<ul>\n  <li>w.asdg<span class='match'>wk<\/span>ad.df<span class='match'>kkk<\/span>.qwwerthj<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<p>‘[ ]’ 表示其中一个，例如’[abd]’表示任意’a’或’b’或’d’都能被匹配。<br /></p>
+<div class="sourceCode" id="cb371"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb371-1" data-line-number="1"><span class="co">#&#39;[wk]&#39;表示字符串中所有的&#39;w&#39; 或&#39;k&#39; 都能被匹配。</span></a>
+<a class="sourceLine" id="cb371-2" data-line-number="2"><span class="kw">str_view_all</span>(<span class="st">&#39;w.asdgwkad.dfkkk.qwwerthj&#39;</span>,<span class="st">&#39;[wk]&#39;</span>) </a></code></pre></div>
+<div id="htmlwidget-d82993e18d6fe491877a" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d82993e18d6fe491877a">{"x":{"html":"<ul>\n  <li><span class='match'>w<\/span>.asdg<span class='match'>w<\/span><span class='match'>k<\/span>ad.df<span class='match'>k<\/span><span class='match'>k<\/span><span class='match'>k<\/span>.q<span class='match'>w<\/span><span class='match'>w<\/span>erthj<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<p>‘[^]’ 表示除此之外，例如’[^abd]’ 表示除’abd’之外的的子字符串都能被匹配。 <br /></p>
+<div class="sourceCode" id="cb372"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb372-1" data-line-number="1"><span class="co">#&#39;[^wk]&#39;表示字符串中除了&#39;w&#39; 和&#39;k&#39; ，其他所有子字符串都能被匹配。</span></a>
+<a class="sourceLine" id="cb372-2" data-line-number="2"><span class="kw">str_view_all</span>(<span class="st">&#39;w.asdgwkad.dfkkk.qwwerthj&#39;</span>,<span class="st">&#39;[^wk]&#39;</span>) </a></code></pre></div>
+<div id="htmlwidget-2ac4467c6e7052c52d29" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2ac4467c6e7052c52d29">{"x":{"html":"<ul>\n  <li>w<span class='match'>.<\/span><span class='match'>a<\/span><span class='match'>s<\/span><span class='match'>d<\/span><span class='match'>g<\/span>wk<span class='match'>a<\/span><span class='match'>d<\/span><span class='match'>.<\/span><span class='match'>d<\/span><span class='match'>f<\/span>kkk<span class='match'>.<\/span><span class='match'>q<\/span>ww<span class='match'>e<\/span><span class='match'>r<\/span><span class='match'>t<\/span><span class='match'>h<\/span><span class='match'>j<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<p>‘[-]’ 表示范围，例如’[a-c]‘表示从a至c，即单个子字符串’a’,’b’或者’c’能被匹配。 <br /></p>
+<div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb373-1" data-line-number="1"><span class="co">#&#39;[a-f]&#39;表示字符串中所有的从a到f的单个子字符串都能被匹配。</span></a>
+<a class="sourceLine" id="cb373-2" data-line-number="2"><span class="kw">str_view_all</span>(<span class="st">&#39;w.asdgwkad.dfkkk.qwwerthj&#39;</span>,<span class="st">&#39;[a-f]&#39;</span>) </a></code></pre></div>
+<div id="htmlwidget-8ab326c4a09c0664972f" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-8ab326c4a09c0664972f">{"x":{"html":"<ul>\n  <li>w.<span class='match'>a<\/span>s<span class='match'>d<\/span>gwk<span class='match'>a<\/span><span class='match'>d<\/span>.<span class='match'>d<\/span><span class='match'>f<\/span>kkk.qww<span class='match'>e<\/span>rthj<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="锚点anchors" class="section level3">
+<h3><span class="header-section-number">13.9.3</span> 锚点(Anchors)</h3>
+<p>‘^’ 表示字符串开头，例如’^a’表示以a开头的字符串为有效匹配。 <br /></p>
+<div class="sourceCode" id="cb374"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb374-1" data-line-number="1"><span class="co">#匹配字符串开头为j的首字母，如果字符串的首字母不是j，则为无有效匹配。</span></a>
+<a class="sourceLine" id="cb374-2" data-line-number="2"><span class="kw">str_view_all</span>(<span class="st">&#39;jdjdjdjdj&#39;</span>,<span class="st">&#39;^j&#39;</span>) </a></code></pre></div>
+<div id="htmlwidget-5fec70b55bee1404bcb6" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-5fec70b55bee1404bcb6">{"x":{"html":"<ul>\n  <li><span class='match'>j<\/span>djdjdjdj<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb375-1" data-line-number="1"><span class="kw">str_view_all</span>(<span class="st">&#39;djdjdjdj&#39;</span>,<span class="st">&#39;^j&#39;</span>) </a></code></pre></div>
+<div id="htmlwidget-6860e0ca7dbedc0670fe" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-6860e0ca7dbedc0670fe">{"x":{"html":"<ul>\n  <li>djdjdjdj<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<p>‘$’ 表示字符串结尾，例如’a$’表示以a结尾的字符串为有效匹配。<br /></p>
+<div class="sourceCode" id="cb376"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb376-1" data-line-number="1"><span class="co">#匹配字符串尾字母j，如果字符串的最后一个字母不是j，则为无有效匹配。</span></a>
+<a class="sourceLine" id="cb376-2" data-line-number="2"><span class="kw">str_view_all</span>(<span class="st">&#39;jdjdjdjdj&#39;</span>,<span class="st">&#39;j$&#39;</span>) </a></code></pre></div>
+<div id="htmlwidget-acb4597418aa3fc1e978" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-acb4597418aa3fc1e978">{"x":{"html":"<ul>\n  <li>jdjdjdjd<span class='match'>j<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb377-1" data-line-number="1"><span class="kw">str_view_all</span>(<span class="st">&#39;djdjdjdj&#39;</span>,<span class="st">&#39;j$&#39;</span>) </a></code></pre></div>
+<div id="htmlwidget-7db6bafe3726f39a6d08" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-7db6bafe3726f39a6d08">{"x":{"html":"<ul>\n  <li>djdjdjd<span class='match'>j<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="查找look-arounds" class="section level3">
+<h3><span class="header-section-number">13.9.4</span> 查找(Look Arounds)</h3>
+<p>‘char1(?=char2)’ 表示匹配char1后一个为char2的char1字符，例如‘a(?=c)’表示匹配a后一个为c的a。 <br /></p>
+<div class="sourceCode" id="cb378"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb378-1" data-line-number="1"><span class="co">#匹配后一个字符为n的u</span></a>
+<a class="sourceLine" id="cb378-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb378-3" data-line-number="3"><span class="kw">str_view_all</span>(<span class="st">&#39;Columbia university&#39;</span>,<span class="st">&#39;u(?=n)&#39;</span>) </a></code></pre></div>
+<div id="htmlwidget-03b350e697f594e416cc" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-03b350e697f594e416cc">{"x":{"html":"<ul>\n  <li>Columbia <span class='match'>u<\/span>niversity<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<p>‘char1(?!char2)’ 表示匹配char1后一个不为char2的char1字符，例如‘a(?!c)’表示匹配a后一个不为c的a。<br /></p>
+<div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb379-1" data-line-number="1"><span class="co">#匹配后一个字符为不为n的u</span></a>
+<a class="sourceLine" id="cb379-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb379-3" data-line-number="3"><span class="kw">str_view_all</span>(<span class="st">&#39;Columbia university&#39;</span>,<span class="st">&#39;u(?!n)&#39;</span>) </a></code></pre></div>
+<div id="htmlwidget-c814ef41e2004c69dbd2" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c814ef41e2004c69dbd2">{"x":{"html":"<ul>\n  <li>Col<span class='match'>u<\/span>mbia university<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<p>‘(?&lt;=char2)char1’ 表示匹配char1前一个为char2的char1字符，例如’(?&lt;=b)a’表示匹配a前一个为b的a。 <br /></p>
+<div class="sourceCode" id="cb380"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb380-1" data-line-number="1"><span class="co">#匹配前一个字符为空格的u</span></a>
+<a class="sourceLine" id="cb380-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb380-3" data-line-number="3"><span class="kw">str_view_all</span>(<span class="st">&#39;Columbia university&#39;</span>,<span class="st">&#39;(?&lt;= )u&#39;</span>) </a></code></pre></div>
+<div id="htmlwidget-c1f04ec3e20745e4059c" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c1f04ec3e20745e4059c">{"x":{"html":"<ul>\n  <li>Columbia <span class='match'>u<\/span>niversity<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<p>‘(?&lt;!char2)char1’ 表示匹配char1前一个不为char2的char1字符，例如’(?&lt;!b)a’表示匹配a前一个不为b的a <br /></p>
+<div class="sourceCode" id="cb381"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb381-1" data-line-number="1"><span class="co">#匹配前一个字符不为空格的u</span></a>
+<a class="sourceLine" id="cb381-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb381-3" data-line-number="3"><span class="kw">str_view_all</span>(<span class="st">&#39;Columbia university&#39;</span>,<span class="st">&#39;(?&lt;! )u&#39;</span>) </a></code></pre></div>
+<div id="htmlwidget-eace38fe5a5abf80bbea" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-eace38fe5a5abf80bbea">{"x":{"html":"<ul>\n  <li>Col<span class='match'>u<\/span>mbia university<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="数量词的使用quantifiers" class="section level3">
+<h3><span class="header-section-number">13.9.5</span> 数量词的使用(Quantifiers)</h3>
+<p>? 代表前一个正则表达式出现零次或者一次<br /></p>
+<div class="sourceCode" id="cb382"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb382-1" data-line-number="1"><span class="co">#寻找字符串ab中有所有由一个a或者空字符组成的模式(pattern)</span></a>
+<a class="sourceLine" id="cb382-2" data-line-number="2"><span class="kw">str_view_all</span>(<span class="st">&#39;ab&#39;</span>,<span class="st">&#39;a?&#39;</span>) </a></code></pre></div>
+<div id="htmlwidget-a2aa6b4695798f4508fa" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a2aa6b4695798f4508fa">{"x":{"html":"<ul>\n  <li><span class='match'>a<\/span><span class='match'><\/span>b<span class='match'><\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb383"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb383-1" data-line-number="1"><span class="co">#寻找字符串.wkwkwkk中有所有由一个k或者空字符组成的模式(pattern)</span></a>
+<a class="sourceLine" id="cb383-2" data-line-number="2"><span class="kw">str_view_all</span>(<span class="st">&#39;.wkwkwkk&#39;</span>,<span class="st">&#39;k?&#39;</span>) </a></code></pre></div>
+<div id="htmlwidget-7bb13a5ab85dd30113b4" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-7bb13a5ab85dd30113b4">{"x":{"html":"<ul>\n  <li><span class='match'><\/span>.<span class='match'><\/span>w<span class='match'>k<\/span><span class='match'><\/span>w<span class='match'>k<\/span><span class='match'><\/span>w<span class='match'>k<\/span><span class='match'>k<\/span><span class='match'><\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<p>* 代表前一个正则表达式出现零次或多次<br /></p>
+<div class="sourceCode" id="cb384"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb384-1" data-line-number="1"><span class="co">#寻找字符串abaa中所有由一个a或者多个a或者空字符组成的模式(pattern)</span></a>
+<a class="sourceLine" id="cb384-2" data-line-number="2"><span class="kw">str_view_all</span>(<span class="st">&#39;abaa&#39;</span>,<span class="st">&#39;a*&#39;</span>) </a></code></pre></div>
+<div id="htmlwidget-2cebf1e274c0fc8872f5" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2cebf1e274c0fc8872f5">{"x":{"html":"<ul>\n  <li><span class='match'>a<\/span><span class='match'><\/span>b<span class='match'>aa<\/span><span class='match'><\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb385"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb385-1" data-line-number="1"><span class="co">#寻找字符串.wkkkkwkwkk中所有由一个k或者多个k或者空字符组成的模式(pattern)</span></a>
+<a class="sourceLine" id="cb385-2" data-line-number="2"><span class="kw">str_view_all</span>(<span class="st">&#39;.wkkkkwkwkk&#39;</span>,<span class="st">&#39;k*&#39;</span>)</a></code></pre></div>
+<div id="htmlwidget-c89c2803f5e40798d0c2" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c89c2803f5e40798d0c2">{"x":{"html":"<ul>\n  <li><span class='match'><\/span>.<span class='match'><\/span>w<span class='match'>kkkk<\/span><span class='match'><\/span>w<span class='match'>k<\/span><span class='match'><\/span>w<span class='match'>kk<\/span><span class='match'><\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb386"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb386-1" data-line-number="1"><span class="co">#可以看到k*和k？的主要区别在于k？会把‘kkkk’当作4个单个k组成的模式(pattern),而k*会把字符串&#39;kkkk&#39;视为一个由4个k组成的模式(pattern)</span></a></code></pre></div>
+<p>+ 代表前一个正则表达式出现一次或多次<br /></p>
+<div class="sourceCode" id="cb387"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb387-1" data-line-number="1"><span class="co">#寻找字符串abaa中有所有由一个a或者多个a组成的模式(pattern)</span></a>
+<a class="sourceLine" id="cb387-2" data-line-number="2"><span class="kw">str_view_all</span>(<span class="st">&#39;abaa&#39;</span>,<span class="st">&#39;a+&#39;</span>) </a></code></pre></div>
+<div id="htmlwidget-1f19b370246838f31344" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1f19b370246838f31344">{"x":{"html":"<ul>\n  <li><span class='match'>a<\/span>b<span class='match'>aa<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb388"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb388-1" data-line-number="1"><span class="co">#寻找字符串.wkkkkwkwkk中所有由一个k或者多个k组成的模式(pattern)</span></a>
+<a class="sourceLine" id="cb388-2" data-line-number="2"><span class="kw">str_view_all</span>(<span class="st">&#39;.wkkkkwkwkk&#39;</span>,<span class="st">&#39;k+&#39;</span>)</a></code></pre></div>
+<div id="htmlwidget-071050b6afa498c14450" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-071050b6afa498c14450">{"x":{"html":"<ul>\n  <li>.w<span class='match'>kkkk<\/span>w<span class='match'>k<\/span>w<span class='match'>kk<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb389"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb389-1" data-line-number="1"><span class="co">#数量词加号不再将空字符视为一个模式(pattern),加号匹配前一个字符串出现至少一次的模式(pattern)</span></a></code></pre></div>
+<p>{n} 代表前一个正则表达式出现n次<br /></p>
+<div class="sourceCode" id="cb390"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb390-1" data-line-number="1"><span class="co">#a{n} 将会匹配字符串中连续出现了n个a的模式(pattern)</span></a></code></pre></div>
+<div class="sourceCode" id="cb391"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb391-1" data-line-number="1"><span class="co">#寻找字符串abaa中所有由2个a组成的模式(pattern)</span></a>
+<a class="sourceLine" id="cb391-2" data-line-number="2"><span class="kw">str_view_all</span>(<span class="st">&#39;abaa&#39;</span>,<span class="st">&#39;a{2}&#39;</span>) </a></code></pre></div>
+<div id="htmlwidget-0e2caf72c96acdb0fe20" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0e2caf72c96acdb0fe20">{"x":{"html":"<ul>\n  <li>ab<span class='match'>aa<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb392"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb392-1" data-line-number="1"><span class="co">#寻找字符串.wkkkkwkwkk中所有由4个k组成的模式(pattern)</span></a>
+<a class="sourceLine" id="cb392-2" data-line-number="2"><span class="kw">str_view_all</span>(<span class="st">&#39;.wkkkkwkwkk&#39;</span>,<span class="st">&#39;k{4}&#39;</span>)</a></code></pre></div>
+<div id="htmlwidget-9fbaec331914350112f1" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-9fbaec331914350112f1">{"x":{"html":"<ul>\n  <li>.w<span class='match'>kkkk<\/span>wkwkk<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<p>{n,} 代表前一个正则表达式出现n次或者更多<br /></p>
+<div class="sourceCode" id="cb393"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb393-1" data-line-number="1"><span class="co">#a{n,} 将会匹配字符串中连续出现了n个a或者更多的模式(pattern)</span></a></code></pre></div>
+<div class="sourceCode" id="cb394"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb394-1" data-line-number="1"><span class="co">#寻找字符串abaaab.bbaaaa.aaa中所有由2个或2个以上a组成的模式(pattern)</span></a>
+<a class="sourceLine" id="cb394-2" data-line-number="2"><span class="kw">str_view_all</span>(<span class="st">&#39;abaab.bbaaaa.aaa&#39;</span>,<span class="st">&#39;a{2,}&#39;</span>) </a></code></pre></div>
+<div id="htmlwidget-d4faa9f2468c49140371" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d4faa9f2468c49140371">{"x":{"html":"<ul>\n  <li>ab<span class='match'>aa<\/span>b.bb<span class='match'>aaaa<\/span>.<span class='match'>aaa<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb395"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb395-1" data-line-number="1"><span class="co">#寻找字符串.wkkkkwkwkk.32.qwdsfkkkkkkkk.wd中所有由4个或者4个以上k组成的模式(pattern)</span></a>
+<a class="sourceLine" id="cb395-2" data-line-number="2"><span class="kw">str_view_all</span>(<span class="st">&#39;.wkkkkwkwkk.32.qwdsfkkkkkkkk.wd&#39;</span>,<span class="st">&#39;k{4,}&#39;</span>)</a></code></pre></div>
+<div id="htmlwidget-5915895a63c5b0f4fa55" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-5915895a63c5b0f4fa55">{"x":{"html":"<ul>\n  <li>.w<span class='match'>kkkk<\/span>wkwkk.32.qwdsf<span class='match'>kkkkkkkk<\/span>.wd<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<p>{n,m} 代表前一个正则表达式出现的次数在n到m之间(包括n和m)<br /></p>
+<div class="sourceCode" id="cb396"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb396-1" data-line-number="1"><span class="co">#a{n,m} 将会匹配字符串中连续出现了n到m个a的模式(pattern)</span></a></code></pre></div>
+<div class="sourceCode" id="cb397"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb397-1" data-line-number="1"><span class="co">#寻找字符串abaaab.bbaaaa.aaa中所有由2到4个a组成的模式(pattern)</span></a>
+<a class="sourceLine" id="cb397-2" data-line-number="2"><span class="kw">str_view_all</span>(<span class="st">&#39;abaab.bbaaaa.aaa&#39;</span>,<span class="st">&#39;a{3,4}&#39;</span>) </a></code></pre></div>
+<div id="htmlwidget-428f9b2b4900520aad71" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-428f9b2b4900520aad71">{"x":{"html":"<ul>\n  <li>abaab.bb<span class='match'>aaaa<\/span>.<span class='match'>aaa<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb398"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb398-1" data-line-number="1"><span class="co">#寻找字符串.wkkkkwkwkk.32.qwdsfkkkkkkkk.wd中所有由4到6个k组成的模式(pattern)</span></a>
+<a class="sourceLine" id="cb398-2" data-line-number="2"><span class="kw">str_view_all</span>(<span class="st">&#39;.wkkkkwkwkk.32.qwdsfkkkkkkkk.wd&#39;</span>,<span class="st">&#39;k{4,6}&#39;</span>)</a></code></pre></div>
+<div id="htmlwidget-4060f784af34050cdf62" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-4060f784af34050cdf62">{"x":{"html":"<ul>\n  <li>.w<span class='match'>kkkk<\/span>wkwkk.32.qwdsf<span class='match'>kkkkkk<\/span>kk.wd<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="括号划分表达式并用转义号码替换" class="section level3">
+<h3><span class="header-section-number">13.9.6</span> 括号划分表达式并用转义号码替换</h3>
+<p>( ) 将表达式中的一个部分用括号包含代表着括号中的子表达式自成一个组，系统在匹配表达式时,也会根据括号的顺序来匹配<br /></p>
+<p>例如: (a)(bb)(cab) 此正则表达式中，第一组子表达式是a,第二组子表达式是bb,第三组表达式是cab,系统在匹配的时候,匹配的循序也就是先匹配一个a,然后两个b,最后再是cab<br /></p>
+<p>我们可以通过在数字前加上双斜杠来直接表示对应数字的子表达式<br />
+例如:<br />
+\\1 在正则表达式中代表第一组子正则表达式<br />
+\\\3 在正则表达式中代表第三组子正则表达式<br />
+等等<br /></p>
+<p>表达式 ‘(a)(b)(c)(c)(b)(a)’ 和 ‘(a)(b)(c)\3\2\1’是相同的 <br />
+表达式’(aab)(cde)(c)(aab)(c)(cde)‘和’(aab)(cde)(c)\1\3\2’是相同的 <br /></p>
+<div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb399-1" data-line-number="1"><span class="kw">str_view_all</span>(<span class="st">&quot;abccbaab&quot;</span>, <span class="st">&#39;(a)(b)(c)</span><span class="ch">\\</span><span class="st">3</span><span class="ch">\\</span><span class="st">2</span><span class="ch">\\</span><span class="st">1&#39;</span>)</a></code></pre></div>
+<div id="htmlwidget-52e8aa7b22f553a34855" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-52e8aa7b22f553a34855">{"x":{"html":"<ul>\n  <li><span class='match'>abccba<\/span>ab<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb400"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb400-1" data-line-number="1"><span class="kw">str_view_all</span>(<span class="st">&quot;abccbaab&quot;</span>, <span class="st">&#39;(a)(b)(c)(c)(b)(a)&#39;</span>)</a></code></pre></div>
+<div id="htmlwidget-9f56974836ebc22a91a9" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-9f56974836ebc22a91a9">{"x":{"html":"<ul>\n  <li><span class='match'>abccba<\/span>ab<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<div id="参考文献reference" class="section level2">
+<h2><span class="header-section-number">13.10</span> 参考文献(Reference)</h2>
+<p><a href="http://edrub.in/CheatSheets/cheatSheetStringr.pdf" class="uri">http://edrub.in/CheatSheets/cheatSheetStringr.pdf</a></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="wordcloud.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="latex-visualization.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/jtr13/cc19/edit/master/Stringr_introduction_chinese_version.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
