@@ -1,5 +1,3 @@
-# (PART) Other {-}
-
 # Self-Reflection & Demographical Discoveries Using Tinder Data
 
 Benjamin Livingston
