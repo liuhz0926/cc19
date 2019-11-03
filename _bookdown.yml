@@ -21,23 +21,25 @@ rmd_files: [
 
   # Part: Interactive Graphs
   'a_tutorial_of_shiny.Rmd',
-  
-  # Data analysis
+
+  # Part: Data analyses
   'ice_cream_survey.Rmd',
+  'tinder_study.Rmd',
 
   # Part: Other
-  'tinder_study.Rmd',
   'wordcloud_tutorial.Rmd',
   "rvest_tutorial.Rmd",
   'rstudio_vs_jupyterlab.Rmd',
   'Dplyr_Relational_Databases.Rmd',
+  'hex_sticker.Rmd',
 
-  # Part: Links
+   # Part: Links
   'master_workshop.Rmd',
   'master_cheat_sheet.Rmd',
   'master_video.Rmd',
-  'master_translation.Rmd',
-  'hex_sticker.Rmd'
+  'master_translation.Rmd'
+
+]
 
 ]
 
